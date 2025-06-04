@@ -1,3 +1,7 @@
+/* ===== ベース ===== */
+html {
+  overflow-y: scroll;
+}
 body {
   font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
   margin: 0;
@@ -5,9 +9,11 @@ body {
   color: #222;
   min-height: 100vh;
 }
+
+/* ===== ヒーロー・ナビ ===== */
 .hero {
   background: linear-gradient(120deg, #50a5f6 0%, #68f768 100%);
-  color: #ffffff;
+  color: #fff;
   padding: 0 1em 1.5em 1em;
   text-align: center;
   border-radius: 0 0 48px 48px;
@@ -26,7 +32,6 @@ body {
   margin-top: 0;
   margin-bottom: 1.5em;
 }
-
 nav {
   margin-top: 1em;
 }
@@ -38,24 +43,41 @@ nav {
   justify-content: center;
   gap: 2em;
 }
+.nav-link,
+.lang-toggle-btn {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  font-size: 1.1em;
+  border-radius: 18px;
+  padding: 0.3em 1.2em;
+}
 .nav-link {
-  color: #ffffff;
+  color: #fff;
   text-decoration: none;
   font-weight: bold;
-  font-size: 1.1em;
-  padding: 0.3em 1.2em;
-  border-radius: 18px;
   transition: background 0.2s, color 0.2s;
 }
-.nav-link:hover {
-  background: #fff;
-  color: #2d5fa4;
-}
+.nav-link:hover,
 .nav-link.active {
   background: #fff;
   color: #2d5fa4;
 }
+.lang-toggle-btn {
+  background: rgba(255,255,255,0.85);
+  border: 1px solid #1b519c;
+  color: #1b519c;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(45,95,164,0.08);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  gap: 0.5em;
+}
 
+/* ===== メイン・セクション ===== */
 main {
   max-width: 1200px;
   margin: 2.5em auto;
@@ -68,7 +90,6 @@ main {
   padding-left: 1em;
   padding-right: 1em;
 }
-
 section {
   background: #fff;
   margin-bottom: 2em;
@@ -80,56 +101,9 @@ section {
   min-width: 280px;
   max-width: 500px;
 }
-
-#home-section a img {
-  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
-  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
-}
-
-#home-section a:hover img {
-  transform: scale(1.06) translateY(-6px);
-  box-shadow: 0 12px 32px rgba(45,95,164,0.18);
-  z-index: 2;
-}
-
-#github-section {
-  max-width: 1200px;
-  min-width: 200px;
-  flex: 1 1 100px;
-  margin-bottom: 0;
-}
-
-#github-section a img {
-  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
-  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
-}
-
-#github-section a:hover img {
-  transform: scale(1.06) translateY(-6px);
-  box-shadow: 0 12px 32px rgba(45,95,164,0.18);
-  z-index: 2;
-}
-
-#github-section .github-graph-wrapper {
-  width: 100%;
-  min-width: 0;
-  overflow-x: auto;
-  margin-bottom: 1.5em;
-  box-sizing: border-box;
-}
-
-#github-section .github-graph-wrapper img {
-  width: 100%;
-  min-width: 0;
-  max-width: 700px;
-  display: block;
-  box-sizing: border-box;
-}
-
 section:hover {
   box-shadow: 0 8px 32px rgba(45,95,164,0.16);
 }
-
 h2 {
   color: #2d5fa4;
   border-left: 7px solid #2d5fa4;
@@ -139,6 +113,8 @@ h2 {
   background: linear-gradient(90deg, #e0eafc 60%, #fff 100%);
   letter-spacing: 0.04em;
 }
+
+/* ===== ボタン ===== */
 .btn {
   display: inline-block;
   margin-top: 1em;
@@ -158,6 +134,32 @@ h2 {
   box-shadow: 0 4px 16px rgba(45,95,164,0.18);
 }
 
+/* ===== 画像ホバーアニメーション ===== */
+#github-section a img {
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
+}
+#github-section a:hover img {
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 12px 32px rgba(45,95,164,0.18);
+  z-index: 2;
+}
+#github-section .github-graph-wrapper {
+  width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  margin-bottom: 1.5em;
+  box-sizing: border-box;
+}
+#github-section .github-graph-wrapper img {
+  width: 100%;
+  min-width: 0;
+  max-width: 700px;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* ===== フッター ===== */
 footer {
   text-align: center;
   color: #888;
@@ -166,6 +168,7 @@ footer {
   letter-spacing: 0.04em;
 }
 
+/* ===== レスポンシブ ===== */
 @media (max-width: 900px) {
   main {
     flex-direction: column;
@@ -174,7 +177,6 @@ footer {
     padding-left: 1em;
     padding-right: 1em;
   }
-
   section {
     max-width: 100%;
     width: 100%;
@@ -182,8 +184,25 @@ footer {
     margin-bottom: 2em;
     align-self: center;
   }
-
   #github-section {
     margin-bottom: 0;
+  }
+}
+@media (max-width: 600px) {
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5em;
+  }
+  .nav-list li {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+  }
+  .nav-link,
+  .lang-toggle-btn {
+    width: 100%;
+    max-width: 90vw;
   }
 }

@@ -10,37 +10,43 @@
 <body>
   <header class="hero">
     <h1 id="site-title" style="cursor:pointer;">hashisato</h1>
-    <p>シンプルな自己紹介ページです</p>
+    <p id="intro-text">hashisatoの自己紹介ページです</p>
     <nav>
       <ul class="nav-list">
         <li><a href="#" class="nav-link" id="nav-home">Home</a></li>
-        <li><a href="#" class="nav-link" id="nav-github">GitHub Status</a></li>
+        <li><a href="#" class="nav-link" id="nav-github">GitHub Status/Products</a></li>
+        <li>
+          <button id="lang-toggle" class="lang-toggle-btn" aria-label="Toggle Language" type="button">
+            <span id="lang-toggle-icon" style="font-size:1.2em;vertical-align:middle;">🌐</span>
+            <span id="lang-toggle-text">日本語</span>
+          </button>
+        </li>
       </ul>
     </nav>
   </header>
   <main>
     <section id="home-section">
-      <h2>GitHub</h2>
-      <p>個人開発のリポジトリを公開しています。</p>
-      <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+      <h2 id="github-title">GitHub</h2>
+      <p id="github-desc">個人開発のリポジトリを公開しています</p>
+      <a id="github-btn" href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
     </section>
     <section id="sns">
-      <h2>X (旧Twitter)</h2>
-      <p>日々の活動はXで発信しています。</p>
-      <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
+      <h2 id="sns-title">X (旧Twitter)</h2>
+      <p id="sns-desc">日々の活動を発信しています</p>
+      <a id="sns-btn" href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
     </section>
     <section id="github-section" style="display:none;">
-      <h2>GitHub Contributions Graph</h2>
+      <h2 id="contrib-title">GitHub Contributions Graph</h2>
       <div class="github-graph-wrapper" style="display:flex; justify-content:center;">
-        <img src="https://ghchart.rshah.org/hashisato" alt="hashisatoのGitHub草グラフ" style="width:100%;max-width:700px;">
+        <img src="https://ghchart.rshah.org/hashisato" alt="hashisato's GitHub contribution graph" style="width:100%;max-width:700px;">
       </div>
-      <h2>代表的なリポジトリ</h2>
+      <h2 id="repo-title">代表的なリポジトリ</h2>
       <div style="display: flex; justify-content: center;">
         <a href="https://github.com/hashisato/itp1-rust" target="_blank" rel="noopener noreferrer">
           <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=itp1-rust" alt="itp1-rust" style="width:100%;max-width:700px;">
         </a>
       </div>
-      <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">リポジトリを見る</a>
+      <a id="all-repo-btn" href="https://github.com/hashisato?tab=repositories" class="btn" target="_blank">全てのリポジトリを見る</a>
     </section>
   </main>
   <footer>
@@ -79,24 +85,72 @@
       navHome.classList.add('active');
       navGithub.classList.remove('active');
     };
-    (function() {
-    const body = document.body;
-    const hour = (new Date().getUTCHours() + 9) % 24;
 
-    if (hour >= 5 && hour < 11) {
-      // 朝（5時～11時未満）白→黄色
-      body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
-    } else if (hour >= 11 && hour < 17) {
-      // 昼（11時～17時未満）白→黄色
-      body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
-    } else if (hour >= 17 && hour < 19) {
-      // 夕方（17時～19時未満）黄色→薄い黒
-      body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
-    } else {
-      // 夜（19時～翌5時未満）青→薄い黒
-      body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
+    // 時間帯で背景グラデーション変更
+    (function() {
+      const body = document.body;
+      const hour = (new Date().getUTCHours() + 9) % 24;
+      if (hour >= 5 && hour < 11) {
+        body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
+      } else if (hour >= 11 && hour < 17) {
+        body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
+      } else if (hour >= 17 && hour < 19) {
+        body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
+      } else {
+        body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
+      }
+    })();
+
+    // 言語切替
+    const langData = {
+      ja: {
+        intro: "hashisatoの自己紹介ページです",
+        githubTitle: "GitHub",
+        githubDesc: "個人開発のリポジトリを公開しています",
+        githubBtn: "GitHubを見る",
+        snsTitle: "X (旧Twitter)",
+        snsDesc: "日々の活動を発信しています",
+        snsBtn: "Xを見る",
+        langBtn: "English",
+        contribTitle: "GitHub Contributions Graph",
+        repoTitle: "代表的なリポジトリ",
+        allRepoBtn: "全てのリポジトリを見る"
+      },
+      en: {
+        intro: "This is hashisato's profile page",
+        githubTitle: "GitHub",
+        githubDesc: "My personal repositories are public",
+        githubBtn: "View GitHub",
+        snsTitle: "X (formerly Twitter)",
+        snsDesc: "I share my daily activities",
+        snsBtn: "View X",
+        langBtn: "日本語",
+        contribTitle: "GitHub Contributions Graph",
+        repoTitle: "Featured Repositories",
+        allRepoBtn: "View All Repositories"
+      }
+    };
+
+    let currentLang = "en";
+    function setLang(lang) {
+      document.getElementById('lang-toggle-text').textContent = langData[lang].langBtn;
+      document.getElementById('intro-text').textContent = langData[lang].intro;
+      document.getElementById('github-title').textContent = langData[lang].githubTitle;
+      document.getElementById('github-desc').textContent = langData[lang].githubDesc;
+      document.getElementById('github-btn').textContent = langData[lang].githubBtn;
+      document.getElementById('sns-title').textContent = langData[lang].snsTitle;
+      document.getElementById('sns-desc').textContent = langData[lang].snsDesc;
+      document.getElementById('sns-btn').textContent = langData[lang].snsBtn;
+      document.getElementById('contrib-title').textContent = langData[lang].contribTitle;
+      document.getElementById('repo-title').textContent = langData[lang].repoTitle;
+      document.getElementById('all-repo-btn').textContent = langData[lang].allRepoBtn;
     }
-  })();
+    setLang(currentLang);
+
+    document.getElementById('lang-toggle').onclick = function() {
+      currentLang = currentLang === "ja" ? "en" : "ja";
+      setLang(currentLang);
+    };
   </script>
 </body>
 </html>
