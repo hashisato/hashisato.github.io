@@ -5,6 +5,7 @@
   <title>hashisato</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/x-icon" href="image/favicon.ico">
 </head>
 <body>
   <header class="hero">
@@ -12,29 +13,50 @@
     <p>シンプルな自己紹介ページです</p>
     <nav>
       <ul class="nav-list">
-        <li><a href="#github" class="nav-link">GitHub</a></li>
-        <li><a href="#sns" class="nav-link">SNS</a></li>
+        <li><a href="#" class="nav-link" id="nav-home">Home</a></li>
+        <li><a href="#" class="nav-link" id="nav-github">GitHub Status</a></li>
       </ul>
     </nav>
   </header>
   <main>
-    <section id="github">
-      <h2>GitHub 紹介</h2>
-      <p>
-        個人開発のリポジトリを公開しています。
-      </p>
-      <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
-    </section>
-    <section id="sns">
-      <h2>SNS 紹介</h2>
-      <p>
-        日々の活動はXで発信しています。
-      </p>
-      <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
-    </section>
-  </main>
+  <section id="home-section">
+    <h2>GitHub 紹介</h2>
+    <p>個人開発のリポジトリを公開しています。</p>
+    <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+  </section>
+  <section id="sns">
+    <h2>SNS 紹介</h2>
+    <p>日々の活動はXで発信しています。</p>
+    <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
+  </section>
+  <section id="github-section" style="display:none;">
+    <h2>GitHub 草グラフ</h2>
+    <img src="https://ghchart.rshah.org/hashisato" alt="hashisatoのGitHub草グラフ" style="width:100%;max-width:700px;">
+    <h2>代表的なリポジトリ</h2>
+    <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=portfolio" alt="portfolio">
+    <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+  </section>
+</main>
   <footer>
     <p>&copy; 2025 hashisato</p>
   </footer>
+  <script>
+    // ページ切り替え用JS
+    const homeSection = document.getElementById('home-section');
+    const snsSection = document.getElementById('sns');
+    const githubSection = document.getElementById('github-section');
+    document.getElementById('nav-home').onclick = function(e) {
+      e.preventDefault();
+      homeSection.style.display = '';
+      snsSection.style.display = '';
+      githubSection.style.display = 'none';
+    };
+    document.getElementById('nav-github').onclick = function(e) {
+      e.preventDefault();
+      homeSection.style.display = 'none';
+      snsSection.style.display = 'none';
+      githubSection.style.display = '';
+    };
+  </script>
 </body>
 </html>
