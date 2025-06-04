@@ -27,6 +27,14 @@ body {
   margin-bottom: 0.1em;
   letter-spacing: 0.08em;
 }
+.hero h1#site-title {
+  font-size: 4.2em;
+  margin-bottom: 0.1em;
+  letter-spacing: 0.08em;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
 .hero p {
   font-size: 1.1em;
   margin-top: 0;
@@ -206,11 +214,11 @@ footer {
     max-width: 90vw;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .hero h1#site-title {
-    font-size: 1.5em !important;
+    font-size: 2.2em !important;
     max-width: 90vw;
-    word-break: break-all;
     overflow-wrap: anywhere;
+    word-break: break-all;
   }
 }
