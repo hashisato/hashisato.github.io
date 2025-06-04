@@ -1,0 +1,112 @@
+body {
+  font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
+  margin: 0;
+  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+  color: #222;
+  min-height: 100vh;
+}
+.hero {
+  background: linear-gradient(120deg, #2d5fa4 60%, #6fa3ef 100%);
+  color: #fff;
+  padding: 0.1em 1em 1.5em 1em;
+  text-align: center;
+  border-radius: 0 0 48px 48px;
+  box-shadow: 0 8px 32px rgba(45,95,164,0.13);
+  position: relative;
+}
+.hero h1 {
+  font-size: 4.2em;
+  margin-bottom: 0.2em;
+  letter-spacing: 0.08em;
+}
+.hero p {
+  font-size: 1.1em;
+  margin-top: 0;
+  margin-bottom: 1.5em;
+}
+nav {
+  margin-top: 1em;
+}
+.nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+}
+.nav-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 0.3em 1.2em;
+  border-radius: 18px;
+  transition: background 0.2s, color 0.2s;
+}
+.nav-link:hover {
+  background: #fff;
+  color: #2d5fa4;
+}
+main {
+  max-width: 600px;
+  margin: 2.5em auto;
+  position: relative;
+  z-index: 1;
+}
+section {
+  background: #fff;
+  margin-bottom: 2em;
+  padding: 2em;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
+  transition: box-shadow 0.2s;
+}
+section:hover {
+  box-shadow: 0 8px 32px rgba(45,95,164,0.16);
+}
+h2 {
+  color: #2d5fa4;
+  border-left: 7px solid #2d5fa4;
+  padding-left: 0.7em;
+  margin-top: 0;
+  font-size: 1.3em;
+  background: linear-gradient(90deg, #e0eafc 60%, #fff 100%);
+  letter-spacing: 0.04em;
+}
+.btn {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.5em 1.5em;
+  background: linear-gradient(90deg, #2d5fa4 60%, #6fa3ef 100%);
+  color: #fff;
+  border-radius: 22px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(45,95,164,0.10);
+  border: none;
+  font-size: 1em;
+}
+.btn:hover {
+  background: linear-gradient(90deg, #17406a 60%, #2d5fa4 100%);
+  box-shadow: 0 4px 16px rgba(45,95,164,0.18);
+}
+footer {
+  text-align: center;
+  color: #888;
+  margin: 3em 0 1em 0;
+  font-size: 1em;
+  letter-spacing: 0.04em;
+}
+@media (max-width: 700px) {
+  main {
+    padding: 0 0.5em;
+  }
+  .nav-list {
+    gap: 1em;
+  }
+  section {
+    padding: 1em;
+  }
+}
