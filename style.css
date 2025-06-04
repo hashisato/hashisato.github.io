@@ -81,18 +81,33 @@ section {
   max-width: 500px;
 }
 
-#github-section {
-  max-width: 700px; /* もともとの500pxより広く */
-  min-width: 320px; /* 必要なら最小幅も調整 */
-  flex: 1 1 700px;  /* フレックス幅も調整 */
+#home-section a img {
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
 }
 
-#github-section img {
-  width: 100%;
-  max-width: 100%;
-  height: auto;
-  display: block;
-  box-sizing: border-box;
+#home-section a:hover img {
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 12px 32px rgba(45,95,164,0.18);
+  z-index: 2;
+}
+
+#github-section {
+  max-width: 1200px;
+  min-width: 200px;
+  flex: 1 1 100px;
+  margin-bottom: 0;
+}
+
+#github-section a img {
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
+}
+
+#github-section a:hover img {
+  transform: scale(1.06) translateY(-6px);
+  box-shadow: 0 12px 32px rgba(45,95,164,0.18);
+  z-index: 2;
 }
 
 #github-section .github-graph-wrapper {
@@ -159,11 +174,16 @@ footer {
     padding-left: 1em;
     padding-right: 1em;
   }
+
   section {
     max-width: 100%;
     width: 100%;
     box-sizing: border-box;
     margin-bottom: 2em;
     align-self: center;
+  }
+
+  #github-section {
+    margin-bottom: 0;
   }
 }
