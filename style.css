@@ -99,14 +99,43 @@ footer {
   font-size: 1em;
   letter-spacing: 0.04em;
 }
-@media (max-width: 700px) {
+
+main {
+  max-width: 1200px;
+  margin: 2.5em auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  align-items: flex-start;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+section {
+  background: #fff;
+  margin-bottom: 2em;
+  padding: 2em;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(45,95,164,0.09);
+  transition: box-shadow 0.2s;
+  flex: 1 1 0;
+  min-width: 280px;
+  max-width: 500px;
+}
+
+@media (max-width: 900px) {
   main {
-    padding: 0 0.5em;
-  }
-  .nav-list {
-    gap: 1em;
+    flex-direction: column;
+    gap: 0;
+    align-items: center;
+    padding-left: 1em;   /* 追加 */
+    padding-right: 1em;  /* 追加 */
   }
   section {
-    padding: 1em;
+    max-width: 100%;
+    margin-bottom: 2em;
+    align-self: center;
   }
 }
