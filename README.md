@@ -1,11 +1,11 @@
-# hashisato-portfolio# hashisato-portfolio
+# hashisato-portfolio
 
 hashisatoのポートフォリオサイトです。  
 自己紹介、GitHubリポジトリ、SNSリンクなどを掲載しています。  
 日本語・英語の言語切替機能付き。
 
 ## サイトURL
-https://your-portfolio-url.example.com
+https://hashisato.github.io/hashisato-portfolio/
 
 ## 主な機能
 - 自己紹介
