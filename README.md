@@ -1,23 +1,23 @@
 # hashisato-portfolio
 
-hashisatoのポートフォリオサイトです。  
-自己紹介、GitHubリポジトリ、SNSリンクなどを掲載しています。  
-日本語・英語の言語切替機能付き。
+This is the portfolio site of hashisato.  
+It includes a self-introduction, GitHub repositories, SNS links, and more.  
+Supports both Japanese and English languages.
 
-## サイトURL
+## Website URL
 https://hashisato.github.io/hashisato-portfolio/
 
-## 主な機能
-- 自己紹介
-- GitHubリポジトリ一覧表示
-- SNS（X/Twitter）リンク
-- GitHub Contributionsグラフ表示
-- 日本語/英語の言語切替
+## Main Features
+- Self-introduction
+- GitHub repository list
+- SNS (X/Twitter) link
+- GitHub Contributions graph
+- Japanese/English language toggle
 
-## 使用技術
+## Technologies Used
 - HTML
 - CSS
 - JavaScript
 
-## 作者
+## Author
 hashisato
