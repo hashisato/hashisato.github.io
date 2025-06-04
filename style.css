@@ -14,12 +14,12 @@ body {
 .hero {
   background: linear-gradient(120deg, #50a5f6 0%, #68f768 100%);
   color: #fff;
-  padding: 0 1em 1.5em 1em;
+  padding: 2.5em 1em 1.5em 1em; /* ← padding-topを2.5emなど大きめに */
   text-align: center;
   border-radius: 0 0 48px 48px;
   box-shadow: 0 8px 32px rgba(45,95,164,0.13);
   position: relative;
-  margin-top: calc(-1 * 48px);
+  margin-top: 0; /* ← ここも0でOK */
   z-index: 10;
 }
 .hero h1 {
@@ -216,7 +216,9 @@ footer {
 }
 @media (max-width: 600px) {
   .hero {
-    margin-top: 0; /* スマホ時はマイナスマージンをなくす */
+    margin-top: 0;
+    padding-top: 2.5em; /* ここも大きめに */
+    border-radius: 0 0 32px 32px;
   }
   .hero h1#site-title {
     font-size: 2.2em !important;
