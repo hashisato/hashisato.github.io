@@ -9,7 +9,7 @@
 </head>
 <body>
   <header class="hero">
-    <h1>hashisato</h1>
+    <h1 id="site-title" style="cursor:pointer;">hashisato</h1>
     <p>シンプルな自己紹介ページです</p>
     <nav>
       <ul class="nav-list">
@@ -19,24 +19,28 @@
     </nav>
   </header>
   <main>
-  <section id="home-section">
-    <h2>GitHub 紹介</h2>
-    <p>個人開発のリポジトリを公開しています。</p>
-    <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
-  </section>
-  <section id="sns">
-    <h2>SNS 紹介</h2>
-    <p>日々の活動はXで発信しています。</p>
-    <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
-  </section>
-  <section id="github-section" style="display:none;">
-    <h2>GitHub 草グラフ</h2>
-    <img src="https://ghchart.rshah.org/hashisato" alt="hashisatoのGitHub草グラフ" style="width:100%;max-width:700px;">
-    <h2>代表的なリポジトリ</h2>
-    <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=portfolio" alt="portfolio">
-    <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
-  </section>
-</main>
+    <section id="home-section">
+      <h2>GitHub 紹介</h2>
+      <p>個人開発のリポジトリを公開しています。</p>
+      <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+    </section>
+    <section id="sns">
+      <h2>SNS 紹介</h2>
+      <p>日々の活動はXで発信しています。</p>
+      <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
+    </section>
+    <section id="github-section" style="display:none;">
+      <h2>GitHub Contributions Graph</h2>
+      <div class="github-graph-wrapper">
+        <img src="https://ghchart.rshah.org/hashisato" alt="hashisatoのGitHub草グラフ" style="width:100%;max-width:700px;">
+      </div>
+      <h2>代表的なリポジトリ</h2>
+      <a href="https://github.com/hashisato/itp1-rust" target="_blank" rel="noopener noreferrer">
+        <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=itp1-rust" alt="itp1-rust" style="width:100%;max-width:700px;">
+      </a>
+      <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">リポジトリを見る</a>
+    </section>
+  </main>
   <footer>
     <p>&copy; 2025 hashisato</p>
   </footer>
@@ -45,18 +49,52 @@
     const homeSection = document.getElementById('home-section');
     const snsSection = document.getElementById('sns');
     const githubSection = document.getElementById('github-section');
-    document.getElementById('nav-home').onclick = function(e) {
+    const navHome = document.getElementById('nav-home');
+    const navGithub = document.getElementById('nav-github');
+
+    navHome.onclick = function(e) {
       e.preventDefault();
       homeSection.style.display = '';
       snsSection.style.display = '';
       githubSection.style.display = 'none';
+      navHome.classList.add('active');
+      navGithub.classList.remove('active');
     };
-    document.getElementById('nav-github').onclick = function(e) {
+    navGithub.onclick = function(e) {
       e.preventDefault();
       homeSection.style.display = 'none';
       snsSection.style.display = 'none';
       githubSection.style.display = '';
+      navHome.classList.remove('active');
+      navGithub.classList.add('active');
     };
+    // 初期表示でHomeに色を付ける
+    navHome.classList.add('active');
+    document.getElementById('site-title').onclick = function() {
+      homeSection.style.display = '';
+      snsSection.style.display = '';
+      githubSection.style.display = 'none';
+      navHome.classList.add('active');
+      navGithub.classList.remove('active');
+    };
+    (function() {
+    const body = document.body;
+    const hour = (new Date().getUTCHours() + 9) % 24;
+
+    if (hour >= 5 && hour < 11) {
+      // 朝（5時～11時未満）白→黄色
+      body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
+    } else if (hour >= 11 && hour < 17) {
+      // 昼（11時～17時未満）白→黄色
+      body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
+    } else if (hour >= 17 && hour < 19) {
+      // 夕方（17時～19時未満）黄色→薄い黒
+      body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
+    } else {
+      // 夜（19時～翌5時未満）青→薄い黒
+      body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
+    }
+  })();
   </script>
 </body>
 </html>
