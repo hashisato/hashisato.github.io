@@ -206,3 +206,11 @@ footer {
     max-width: 90vw;
   }
 }
+@media (max-width: 480px) {
+  .hero h1#site-title {
+    font-size: 2em;
+    word-break: break-all;
+    max-width: 90vw;
+    overflow-wrap: anywhere;
+  }
+}
