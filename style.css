@@ -215,6 +215,9 @@ footer {
   }
 }
 @media (max-width: 600px) {
+  .hero {
+    margin-top: 0; /* スマホ時はマイナスマージンをなくす */
+  }
   .hero h1#site-title {
     font-size: 2.2em !important;
     max-width: 90vw;
