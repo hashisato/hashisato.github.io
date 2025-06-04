@@ -1,12 +1,12 @@
 body {
   font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
   margin: 0;
-  background: linear-gradient(120deg, #e0eafc 0%, #cfdef3 100%);
+  background: linear-gradient(120deg, #ffffff 0%, #1b519c 100%);
   color: #222;
   min-height: 100vh;
 }
 .hero {
-  background: linear-gradient(120deg, #2d5fa4 60%, #6fa3ef 100%);
+  background: linear-gradient(180deg, #36ABD9 0%, #57C785 50%, #EDDD53 100%);
   color: #fff;
   padding: 0.1em 1em 1.5em 1em;
   text-align: center;
