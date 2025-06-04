@@ -227,3 +227,70 @@ footer {
     word-break: break-all;
   }
 }
+
+/* ヒーローセクションを画面中央に大きく表示 */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* 画面全体の高さ */
+  background: linear-gradient(120deg, #50a5f6 0%, #68f768 100%);
+  color: #fff;
+  text-align: center;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* タイトルを大きく中央に */
+#site-title {
+  font-size: 3.5em;
+  margin: 0 0 0.3em 0;
+  cursor: pointer;
+  letter-spacing: 0.08em;
+}
+
+/* サブテキストも中央に */
+#intro-text {
+  font-size: 1.5em;
+  margin: 0 0 1.5em 0;
+}
+
+/* ナビゲーションを中央寄せ＆横並び */
+.nav-list {
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+/* レスポンシブ：スマホ時は縦並び＆サイズ調整 */
+@media (max-width: 300px) {
+  .hero {
+    height: auto;
+    padding: 2em 0 1em 0;
+  }
+  #site-title {
+    font-size: 2em;
+  }
+  #intro-text {
+    font-size: 1.1em;
+  }
+  .nav-list {
+    flex-direction: column;
+    gap: 0.7em;
+  }
+  .nav-link,
+  .lang-toggle-btn {
+    width: 90vw;
+    font-size: 1em;
+    min-height: 44px;
+    padding: 10px 0;
+  }
+}
