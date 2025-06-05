@@ -53,53 +53,99 @@
   <footer>
     <p>&copy; 2025 hashisato</p>
   </footer>
+
+  <!-- 固定ナビ -->
+  <style>
+    .fixed-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      background: rgba(80,165,246,0.97);
+      z-index: 1000;
+      box-shadow: 0 2px 12px rgba(45,95,164,0.13);
+      display: none;
+      justify-content: center;
+      padding: 0.5em 0;
+      animation: slideDownNav 0.3s;
+    }
+    @keyframes slideDownNav {
+      from { transform: translateY(-100%);}
+      to { transform: translateY(0);}
+    }
+  </style>
+  <nav id="fixed-nav" class="fixed-nav">
+    <ul class="nav-list">
+      <li><a href="#" class="nav-link" id="fixed-nav-home">Home</a></li>
+      <li><a href="#" class="nav-link" id="fixed-nav-github">GitHub Status/Products</a></li>
+      <li>
+        <button id="fixed-lang-toggle" class="lang-toggle-btn" aria-label="Toggle Language" type="button">
+          <span id="fixed-lang-toggle-icon" style="font-size:1.2em;vertical-align:middle;">🌐</span>
+          <span id="fixed-lang-toggle-text">日本語</span>
+        </button>
+      </li>
+    </ul>
+  </nav>
+
   <script>
-    // ページ切り替え用JS
+    // --- ページ切り替え・ナビ同期 ---
+    const navHome = document.getElementById('nav-home');
+    const navGithub = document.getElementById('nav-github');
+    const fixedNavHome = document.getElementById('fixed-nav-home');
+    const fixedNavGithub = document.getElementById('fixed-nav-github');
     const homeSection = document.getElementById('home-section');
     const snsSection = document.getElementById('sns');
     const githubSection = document.getElementById('github-section');
-    const navHome = document.getElementById('nav-home');
-    const navGithub = document.getElementById('nav-github');
 
-    navHome.onclick = function(e) {
-      e.preventDefault();
+    function showHome(e) {
+      if (e) e.preventDefault();
       homeSection.style.display = '';
       snsSection.style.display = '';
       githubSection.style.display = 'none';
       navHome.classList.add('active');
+      fixedNavHome.classList.add('active');
       navGithub.classList.remove('active');
-    };
-    navGithub.onclick = function(e) {
-      e.preventDefault();
+      fixedNavGithub.classList.remove('active');
+    }
+    function showGithub(e) {
+      if (e) e.preventDefault();
       homeSection.style.display = 'none';
       snsSection.style.display = 'none';
       githubSection.style.display = '';
       navHome.classList.remove('active');
+      fixedNavHome.classList.remove('active');
       navGithub.classList.add('active');
-    };
-    // 初期表示でHomeに色を付ける
-    navHome.classList.add('active');
-    document.getElementById('site-title').onclick = function() {
-      homeSection.style.display = '';
-      snsSection.style.display = '';
-      githubSection.style.display = 'none';
-      navHome.classList.add('active');
-      navGithub.classList.remove('active');
-    };
+      fixedNavGithub.classList.add('active');
+    }
+    navHome.onclick = showHome;
+    fixedNavHome.onclick = showHome;
+    navGithub.onclick = showGithub;
+    fixedNavGithub.onclick = showGithub;
+    // 初期表示でHomeをactiveに
+    showHome();
 
-    // 時間帯で背景グラデーション変更
+    // サイトタイトルクリックでHome表示
+    document.getElementById('site-title').onclick = showHome;
+
+    // 固定ナビ表示制御
     (function() {
-      const body = document.body;
-      const hour = (new Date().getUTCHours() + 9) % 24;
-      if (hour >= 5 && hour < 11) {
-        body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
-      } else if (hour >= 11 && hour < 17) {
-        body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
-      } else if (hour >= 17 && hour < 19) {
-        body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
-      } else {
-        body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
-      }
+      const hero = document.querySelector('.hero');
+      const fixedNav = document.getElementById('fixed-nav');
+      let ticking = false;
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            const heroBottom = hero.offsetTop + hero.offsetHeight;
+            if (window.scrollY >= heroBottom) {
+              fixedNav.style.display = 'flex';
+            } else {
+              fixedNav.style.display = 'none';
+            }
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
     })();
 
     // 言語切替
@@ -135,6 +181,7 @@
     let currentLang = "en";
     function setLang(lang) {
       document.getElementById('lang-toggle-text').textContent = langData[lang].langBtn;
+      document.getElementById('fixed-lang-toggle-text').textContent = langData[lang].langBtn;
       document.getElementById('intro-text').textContent = langData[lang].intro;
       document.getElementById('github-title').textContent = langData[lang].githubTitle;
       document.getElementById('github-desc').textContent = langData[lang].githubDesc;
@@ -152,6 +199,63 @@
       currentLang = currentLang === "ja" ? "en" : "ja";
       setLang(currentLang);
     };
+    document.getElementById('fixed-lang-toggle').onclick = function() {
+      document.getElementById('lang-toggle').click();
+      document.getElementById('fixed-lang-toggle-text').textContent =
+        document.getElementById('lang-toggle-text').textContent;
+    };
+    // 言語切替時に固定ナビのテキストも同期
+    const observer = new MutationObserver(() => {
+      document.getElementById('fixed-lang-toggle-text').textContent =
+        document.getElementById('lang-toggle-text').textContent;
+    });
+    observer.observe(document.getElementById('lang-toggle-text'), { childList: true });
+
+    // 時間帯で背景グラデーション変更（無効化済み）
+    /*
+    (function() {
+      const body = document.body;
+      const hour = (new Date().getUTCHours() + 9) % 24;
+      if (hour >= 5 && hour < 11) {
+        body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
+      } else if (hour >= 11 && hour < 17) {
+        body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
+      } else if (hour >= 17 && hour < 19) {
+        body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
+      } else {
+        body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
+      }
+    })();
+    */
+
+    // hero自動スクロール
+    (function() {
+      const hero = document.querySelector('.hero');
+      let lastScrollY = window.scrollY;
+      let scrollTimeout = null;
+      let isAutoScrolling = false;
+      window.addEventListener('scroll', function() {
+        if (isAutoScrolling) return;
+        if (scrollTimeout) clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(function() {
+          const heroBottom = hero.offsetTop + hero.offsetHeight;
+          const threshold = 2;
+          // 下方向：heroから少しでも下に行ったらheroの真下まで
+          if (window.scrollY > threshold && window.scrollY < heroBottom - threshold && window.scrollY > lastScrollY) {
+            isAutoScrolling = true;
+            window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+            setTimeout(() => { isAutoScrolling = false; }, 500);
+          }
+          // 上方向：heroの真下から上に戻ったらheroの一番上まで
+          else if (window.scrollY < heroBottom - threshold && lastScrollY > window.scrollY && window.scrollY > threshold) {
+            isAutoScrolling = true;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { isAutoScrolling = false; }, 500);
+          }
+          lastScrollY = window.scrollY;
+        }, 100);
+      });
+    })();
   </script>
 </body>
 </html>
