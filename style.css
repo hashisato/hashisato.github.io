@@ -8,6 +8,7 @@ body {
   background: linear-gradient(120deg, #ffffff 0%, #fff9c4 100%);
   color: #222;
   min-height: 100vh;
+  padding-bottom: 200vh; /* 画面の2倍分の余白を下に追加 */
 }
 
 /* ===== ヒーロー・ナビ ===== */
