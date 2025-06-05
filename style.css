@@ -1,14 +1,12 @@
 /* ===== ベース ===== */
-html {
+html {}
 
-}
 body {
   font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
   margin: 0;
-  background: linear-gradient(120deg, #ffffff 0%, #fff9c4 100%);
+  background: #fff; /* 背景を白に */
   color: #222;
-  min-height: 100vh;
-  padding-bottom: 200vh;
+  min-height: 250vh;
 }
 
 /* ===== ヒーロー・ナビ ===== */
@@ -89,7 +87,7 @@ nav {
 
 /* ===== 固定ナビ（バー） ===== */
 .fixed-nav {
-  background: linear-gradient(90deg, #c0c0c0 0%, #c0c0c0 100%) !important;
+  background: linear-gradient(90deg, #1b519c 0%, #50a5f6 100%) !important;
   z-index: 10000;
   box-shadow: 0 2px 12px rgba(45,95,164,0.13);
   position: fixed;
@@ -219,9 +217,9 @@ footer {
   .lang-toggle-btn {
     width: 100%;
     max-width: 90vw;
-    font-size: 0.95em;      /* フォントサイズを少し小さく */
-    min-height: 38px;       /* 高さを小さく */
-    padding: 0.2em 0.7em;   /* パディングも小さく */
+    font-size: 0.95em;
+    min-height: 38px;
+    padding: 0.2em 0.7em;
   }
   .hero h1#site-title {
     font-size: 2.2em !important;
@@ -230,7 +228,6 @@ footer {
     word-break: break-all;
   }
 }
-/* 375×667(iPhone SE/8)など縦長スマホ対応 */
 @media (max-width: 400px) {
   .nav-list {
     flex-direction: column;
