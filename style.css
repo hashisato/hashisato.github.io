@@ -1,6 +1,6 @@
 /* ===== ベース ===== */
 html {
-  overflow-y: scroll;
+
 }
 body {
   font-family: 'Segoe UI', 'Hiragino Sans', 'Meiryo', sans-serif;
@@ -8,26 +8,27 @@ body {
   background: linear-gradient(120deg, #ffffff 0%, #fff9c4 100%);
   color: #222;
   min-height: 100vh;
-  padding-bottom: 200vh; /* 画面の2倍分の余白を下に追加 */
+  padding-bottom: 200vh;
 }
 
 /* ===== ヒーロー・ナビ ===== */
 .hero {
   background: linear-gradient(120deg, #50a5f6 0%, #68f768 100%);
   color: #fff;
-  padding: 2.5em 1em 1.5em 1em; /* ← padding-topを2.5emなど大きめに */
+  padding: 2.5em 1em 1.5em 1em;
   text-align: center;
   border-radius: 0 0 48px 48px;
   box-shadow: 0 8px 32px rgba(45,95,164,0.13);
   position: relative;
-  margin-top: 0; /* ← ここも0でOK */
+  margin-top: 0;
   z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
-.hero h1 {
-  font-size: 4.2em;
-  margin-bottom: 0.1em;
-  letter-spacing: 0.08em;
-}
+.hero h1,
 .hero h1#site-title {
   font-size: 4.2em;
   margin-bottom: 0.1em;
@@ -36,10 +37,10 @@ body {
   overflow-wrap: anywhere;
   word-break: break-all;
 }
-.hero p {
-  font-size: 1.1em;
-  margin-top: 0;
-  margin-bottom: 1.5em;
+.hero p,
+#intro-text {
+  font-size: 1.5em;
+  margin: 0 0 1.5em 0;
 }
 nav {
   margin-top: 1em;
@@ -86,10 +87,26 @@ nav {
   gap: 0.5em;
 }
 
+/* ===== 固定ナビ（バー） ===== */
+.fixed-nav {
+  background: linear-gradient(90deg, #c0c0c0 0%, #c0c0c0 100%) !important;
+  z-index: 10000;
+  box-shadow: 0 2px 12px rgba(45,95,164,0.13);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  display: none;
+  justify-content: center;
+  padding: 0.5em 0;
+  animation: slideDownNav 0.3s;
+  pointer-events: auto;
+}
+
 /* ===== メイン・セクション ===== */
 main {
   max-width: 1200px;
-  margin: 2.5em auto;
+  margin: 7em auto 2.5em auto;
   position: relative;
   z-index: 1;
   display: flex;
@@ -198,28 +215,13 @@ footer {
   }
 }
 @media (max-width: 600px) {
-  .nav-list {
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5em;
-  }
-  .nav-list li {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: stretch;
-  }
   .nav-link,
   .lang-toggle-btn {
     width: 100%;
     max-width: 90vw;
-  }
-}
-@media (max-width: 600px) {
-  .hero {
-    margin-top: 0;
-    padding-top: 2.5em; /* ここも大きめに */
-    border-radius: 0 0 32px 32px;
+    font-size: 0.95em;      /* フォントサイズを少し小さく */
+    min-height: 38px;       /* 高さを小さく */
+    padding: 0.2em 0.7em;   /* パディングも小さく */
   }
   .hero h1#site-title {
     font-size: 2.2em !important;
@@ -228,70 +230,37 @@ footer {
     word-break: break-all;
   }
 }
-
-/* ヒーローセクションを画面中央に大きく表示 */
-.hero {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh; /* 画面全体の高さ */
-  background: linear-gradient(120deg, #50a5f6 0%, #68f768 100%);
-  color: #fff;
-  text-align: center;
-  border-radius: 0;
-  box-shadow: none;
-  margin: 0;
-  padding: 0;
-}
-
-/* タイトルを大きく中央に */
-#site-title {
-  font-size: 3.5em;
-  margin: 0 0 0.3em 0;
-  cursor: pointer;
-  letter-spacing: 0.08em;
-}
-
-/* サブテキストも中央に */
-#intro-text {
-  font-size: 1.5em;
-  margin: 0 0 1.5em 0;
-}
-
-/* ナビゲーションを中央寄せ＆横並び */
-.nav-list {
-  display: flex;
-  justify-content: center;
-  gap: 2em;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-
-
-/* レスポンシブ：スマホ時は縦並び＆サイズ調整 */
-@media (max-width: 300px) {
-  .hero {
-    height: auto;
-    padding: 2em 0 1em 0;
-  }
-  #site-title {
-    font-size: 2em;
-  }
-  #intro-text {
-    font-size: 1.1em;
-  }
+/* 375×667(iPhone SE/8)など縦長スマホ対応 */
+@media (max-width: 400px) {
   .nav-list {
     flex-direction: column;
-    gap: 0.7em;
+    gap: 0.5em;
   }
   .nav-link,
   .lang-toggle-btn {
-    width: 90vw;
-    font-size: 1em;
-    min-height: 44px;
-    padding: 10px 0;
+    width: 95vw;
+    max-width: 95vw;
+    font-size: 0.92em;
+    min-height: 36px;
+    padding: 0.15em 0.5em;
+  }
+  .hero {
+    padding: 1.5em 0.3em 1em 0.3em;
+    border-radius: 0 0 24px 24px;
+    height: auto;
+  }
+  .hero h1#site-title {
+    font-size: 1.5em !important;
+    max-width: 95vw;
+  }
+  main {
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    margin-top: 6em;
+  }
+  section {
+    padding: 1em 0.5em;
+    min-width: 0;
+    max-width: 100vw;
   }
 }
