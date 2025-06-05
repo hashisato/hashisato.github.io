@@ -113,6 +113,7 @@ main {
   align-items: flex-start;
   padding-left: 1em;
   padding-right: 1em;
+  padding-top: 4em;
 }
 section {
   background: #fff;
