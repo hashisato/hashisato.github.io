@@ -26,12 +26,12 @@
     </nav>
   </header>
   <main>
-    <section id="home-section">
+    <section id="github-link">
       <h2 id="github-title">GitHub</h2>
       <p id="github-desc">個人開発のリポジトリを公開しています</p>
       <a id="github-btn" href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
     </section>
-    <section id="sns">
+    <section id="x-link">
       <h2 id="sns-title">X (旧Twitter)</h2>
       <p id="sns-desc">日々の活動を発信しています</p>
       <a id="sns-btn" href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
@@ -46,6 +46,8 @@
         <a href="https://github.com/hashisato/itp1-rust" target="_blank" rel="noopener noreferrer">
           <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=itp1-rust" alt="itp1-rust" style="width:100%;max-width:700px;">
         </a>
+        <a href="https://github.com/hashisato/rsa-encryption-decryption" target="_blank" rel="noopener noreferrer">
+          <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=rsa-encryption-decryption" alt="rsa-encryption-decryption" style="width:100%;max-width:700px;">
       </div>
       <a id="all-repo-btn" href="https://github.com/hashisato?tab=repositories" class="btn" target="_blank">全てのリポジトリを見る</a>
     </section>
@@ -93,14 +95,14 @@
     const navGithub = document.getElementById('nav-github');
     const fixedNavHome = document.getElementById('fixed-nav-home');
     const fixedNavGithub = document.getElementById('fixed-nav-github');
-    const homeSection = document.getElementById('home-section');
-    const snsSection = document.getElementById('sns');
+    const githubLinkSection = document.getElementById('github-link');
+    const xLinkSection = document.getElementById('x-link');
     const githubSection = document.getElementById('github-section');
 
     function showHome(e) {
       if (e) e.preventDefault();
-      homeSection.style.display = '';
-      snsSection.style.display = '';
+      githubLinkSection.style.display = '';
+      xLinkSection.style.display = '';
       githubSection.style.display = 'none';
       navHome.classList.add('active');
       fixedNavHome.classList.add('active');
@@ -109,8 +111,8 @@
     }
     function showGithub(e) {
       if (e) e.preventDefault();
-      homeSection.style.display = 'none';
-      snsSection.style.display = 'none';
+      githubLinkSection.style.display = 'none';
+      xLinkSection.style.display = 'none';
       githubSection.style.display = '';
       navHome.classList.remove('active');
       fixedNavHome.classList.remove('active');
@@ -178,7 +180,7 @@
       }
     };
 
-    let currentLang = "en";
+    let currentLang = "ja";
     function setLang(lang) {
       document.getElementById('lang-toggle-text').textContent = langData[lang].langBtn;
       document.getElementById('fixed-lang-toggle-text').textContent = langData[lang].langBtn;
