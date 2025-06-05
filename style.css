@@ -24,7 +24,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh; /* ここを追加 */
+  height: 100vh;     /* 既存のheight指定はそのままでもOK */
 }
 .hero h1,
 .hero h1#site-title {
