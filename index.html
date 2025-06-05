@@ -152,6 +152,112 @@
       currentLang = currentLang === "ja" ? "en" : "ja";
       setLang(currentLang);
     };
+  (function() {
+    const hero = document.querySelector('.hero');
+    let lastScrollY = window.scrollY;
+    let scrollTimeout = null;
+    let isAutoScrolling = false; // 自動スクロール中かどうか
+
+    window.addEventListener('scroll', function() {
+      if (isAutoScrolling) return; // 自動スクロール中は何もしない
+
+      if (scrollTimeout) clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(function() {
+        const heroBottom = hero.offsetTop + hero.offsetHeight;
+        const threshold = 2;
+        // 下方向：heroから少しでも下に行ったらheroの真下まで
+        if (window.scrollY > threshold && window.scrollY < heroBottom - threshold && window.scrollY > lastScrollY) {
+          isAutoScrolling = true;
+          window.scrollTo({ top: heroBottom, behavior: 'smooth' });
+          setTimeout(() => { isAutoScrolling = false; }, 500); // スクロール完了までロック
+        }
+        // 上方向：heroの真下から上に戻ったらheroの一番上まで
+        else if (window.scrollY < heroBottom - threshold && lastScrollY > window.scrollY && window.scrollY > threshold) {
+          isAutoScrolling = true;
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+          setTimeout(() => { isAutoScrolling = false; }, 500);
+        }
+        lastScrollY = window.scrollY;
+      }, 100); // 300ms待ってから自動で動く
+    });
+  })();
   </script>
+  <style>
+  .fixed-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    background: rgba(80,165,246,0.97);
+    z-index: 1000;
+    box-shadow: 0 2px 12px rgba(45,95,164,0.13);
+    display: none;
+    justify-content: center;
+    padding: 0.5em 0;
+    animation: slideDownNav 0.3s;
+  }
+  @keyframes slideDownNav {
+    from { transform: translateY(-100%);}
+    to { transform: translateY(0);}
+  }
+</style>
+<nav id="fixed-nav" class="fixed-nav" style="display: none;">
+  <ul class="nav-list">
+    <li><a href="#" class="nav-link" id="fixed-nav-home">Home</a></li>
+    <li><a href="#" class="nav-link" id="fixed-nav-github">GitHub Status/Products</a></li>
+    <li>
+      <button id="fixed-lang-toggle" class="lang-toggle-btn" aria-label="Toggle Language" type="button">
+        <span id="fixed-lang-toggle-icon" style="font-size:1.2em;vertical-align:middle;">🌐</span>
+        <span id="fixed-lang-toggle-text">日本語</span>
+      </button>
+    </li>
+  </ul>
+</nav>
+<script>
+  // 固定ナビ表示制御
+  (function() {
+    const hero = document.querySelector('.hero');
+    const fixedNav = document.getElementById('fixed-nav');
+    let ticking = false;
+    window.addEventListener('scroll', function() {
+      if (!ticking) {
+        window.requestAnimationFrame(function() {
+          const heroBottom = hero.offsetTop + hero.offsetHeight;
+          if (window.scrollY >= heroBottom) {
+            fixedNav.style.display = 'flex';
+          } else {
+            fixedNav.style.display = 'none';
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    });
+
+    // 固定ナビのボタンも本体と同じ動作に
+    document.getElementById('fixed-nav-home').onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('nav-home').click();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+    document.getElementById('fixed-nav-github').onclick = function(e) {
+      e.preventDefault();
+      document.getElementById('nav-github').click();
+      window.scrollTo({ top: document.querySelector('.hero').offsetHeight, behavior: 'smooth' });
+    };
+    document.getElementById('fixed-lang-toggle').onclick = function() {
+      document.getElementById('lang-toggle').click();
+      // 言語切替テキストも同期
+      document.getElementById('fixed-lang-toggle-text').textContent =
+        document.getElementById('lang-toggle-text').textContent;
+    };
+    // 言語切替時に固定ナビのテキストも同期
+    const observer = new MutationObserver(() => {
+      document.getElementById('fixed-lang-toggle-text').textContent =
+        document.getElementById('lang-toggle-text').textContent;
+    });
+    observer.observe(document.getElementById('lang-toggle-text'), { childList: true });
+  })();
+</script>
 </body>
 </html>
