@@ -8,78 +8,102 @@
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
   <meta name="description" content="Welcome to hashisato's personal homepage! Created in the spirit of the early internet.">
 </head>
-<body>
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
   <header class="hero">
     <h1>hashisato</h1>
     <p>hashisatoの自己紹介ページです</p>
   </header>
-  
+
   <main>
-    <section class="about-text">
-      <h2>自己紹介</h2>
-      <p>
-        hashisatoです。<br>
-        色々勉強中です！よろしくお願いします！<br><br>
-        <strong>最終更新日:</strong> 2025年8月15日
-      </p>
-    </section>
+    
+    <!--
+    <aside class="sidebar">
+      <div class="sidebar-section">
+        <h3>ナビゲーション</h3>
+        <div class="sidebar-item">
+          <a href="#" class="sidebar-link">🏠 ホーム</a>
+        </div>
+        <div class="sidebar-item">
+          <a href="https://github.com/hashisato" class="sidebar-link" target="_blank">💻 GitHub</a>
+        </div>
+      </div>
+      
+      <div class="sidebar-section">
+        <h3>現在時刻</h3>
+        <div class="sidebar-item sidebar-clock">
+          <div class="sidebar-time" id="sidebar-time">--:--:--</div>
+          <div class="sidebar-date" id="sidebar-date">----/--/--</div>
+        </div>
+      </div>
+    </aside>
+    -->
 
-    <div class="card-list">
-      <div class="card">
-        <h2>GitHub</h2>
-        <p>個人開発のリポジトリを公開しています</p>
-        <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+    <div class="main-content">
+      <section class="about-text">
+        <h2>自己紹介</h2>
+        <p>
+          hashisatoです。<br>
+          色々勉強中です！よろしくお願いします！<br><br>
+          <strong>最終更新日:</strong> 2025年8月15日
+        </p>
+      </section>
+
+      <div class="card-list">
+        <div class="card">
+          <h2>GitHub</h2>
+          <p>個人開発のリポジトリを公開しています</p>
+          <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+        </div>
+        <div class="card">
+          <h2>X（Twitter）</h2>
+          <p>日々の活動や技術情報を発信しています</p>
+          <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
+        </div>
       </div>
-      <div class="card">
-        <h2>X（Twitter）</h2>
-        <p>日々の活動や技術情報を発信しています</p>
-        <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
-      </div>
+
+      <!-- GitHub制作物紹介セクション -->
+      <section class="projects-section">
+        <h2>制作物紹介</h2>
+        <p>最近作ったプログラムたちです〜(´∀｀) まだまだ勉強中ですが…</p>
+        
+        <div class="projects-list">
+          <div class="project-card">
+            <h3>itp1-rust</h3>
+            <p>
+              Rustの勉強で作った競技プログラミング問題の解答集です！<br>
+              AtCoderのITP1問題をRustで解いてみました(´・ω・｀)<br>
+              <strong>使用技術:</strong> Rust
+            </p>
+            <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">詳細を見る</a>
+          </div>
+          
+          <div class="project-card">
+            <h3>RSA暗号化・復号化プログラム</h3>
+            <p>
+              暗号化の仕組みを勉強したくて作ってみました！<br>
+              RSA暗号の実装にチャレンジ…まだまだ改良の余地ありです(汗<br>
+              <strong>使用技術:</strong> Python
+            </p>
+            <a href="https://github.com/hashisato/rsa-encryption-decryption" class="btn" target="_blank">詳細を見る</a>
+          </div>
+          
+          <div class="project-card">
+            <h3>このホームページ</h3>
+            <p>
+              90年代風のレトロなデザインにしてみました〜♪<br>
+              HTMLとCSSだけのシンプル構成です(´∀｀)<br>
+              <strong>使用技術:</strong> HTML, CSS
+            </p>
+            <a href="https://github.com/hashisato/hashisato-portfolio" class="btn" target="_blank">ソースコード</a>
+          </div>
+        </div>
+        
+        <div class="more-projects">
+          <p>他にも色々作ってます！全部見たい方はこちら↓</p>
+          <a href="https://github.com/hashisato?tab=repositories" class="btn btn-large" target="_blank">全ての制作物を見る</a>
+        </div>
+      </section>
     </div>
-
-    <!-- GitHub制作物紹介セクション -->
-    <section class="projects-section">
-      <h2>制作物紹介</h2>
-      <p>最近作ったプログラムたちです〜(´∀｀) まだまだ勉強中ですが…</p>
-      
-      <div class="projects-list">
-        <div class="project-card">
-          <h3>itp1-rust</h3>
-          <p>
-            Rustの勉強で作った競技プログラミング問題の解答集です！<br>
-            AtCoderのITP1問題をRustで解いてみました(´・ω・｀)<br>
-            <strong>使用技術:</strong> Rust
-          </p>
-          <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">詳細を見る</a>
-        </div>
-        
-        <div class="project-card">
-          <h3>RSA暗号化・復号化プログラム</h3>
-          <p>
-            暗号化の仕組みを勉強したくて作ってみました！<br>
-            RSA暗号の実装にチャレンジ…まだまだ改良の余地ありです(汗<br>
-            <strong>使用技術:</strong> Python
-          </p>
-          <a href="https://github.com/hashisato/rsa-encryption-decryption" class="btn" target="_blank">詳細を見る</a>
-        </div>
-        
-        <div class="project-card">
-          <h3>このホームページ</h3>
-          <p>
-            90年代風のレトロなデザインにしてみました〜♪<br>
-            HTMLとCSSだけのシンプル構成です(´∀｀)<br>
-            <strong>使用技術:</strong> HTML, CSS
-          </p>
-          <a href="https://github.com/hashisato/hashisato-portfolio" class="btn" target="_blank">ソースコード</a>
-        </div>
-      </div>
-      
-      <div class="more-projects">
-        <p>他にも色々作ってます！全部見たい方はこちら↓</p>
-        <a href="https://github.com/hashisato?tab=repositories" class="btn btn-large" target="_blank">全ての制作物を見る</a>
-      </div>
-    </section>
-    <!-- GitHub制作物紹介セクション -->
   </main>
   
   <footer>
@@ -88,5 +112,88 @@
       このサイトは Netscape Navigator 4.0 以上での閲覧を推奨します
     </p>
   </footer>
+
+  <script>
+    // 右クリック禁止
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    // F12、Ctrl+Shift+I、Ctrl+U などの開発者ツール関連キーを無効化
+    document.addEventListener('keydown', function(e) {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+Shift+I (開発者ツール)
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+U (ソース表示)
+      if (e.ctrlKey && e.key === 'U') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+S (保存)
+      if (e.ctrlKey && e.key === 's') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+A (全選択)
+      if (e.ctrlKey && e.key === 'a') {
+        e.preventDefault();
+        return false;
+      }
+      // Ctrl+C (コピー)
+      if (e.ctrlKey && e.key === 'c') {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    // テキスト選択禁止
+    document.onselectstart = function() {
+      return false;
+    };
+
+    // ドラッグ禁止
+    document.ondragstart = function() {
+      return false;
+    };
+
+    function updateClock() {
+      const now = new Date();
+      
+      // 時刻表示 (HH:MM:SS)
+      const timeString = now.toLocaleTimeString('ja-JP', {
+        hour12: false,
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+      
+      // 日付表示 (YYYY/MM/DD)
+      const dateString = now.toLocaleDateString('ja-JP', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      
+      // サイドバー時計の更新
+      const sidebarTime = document.getElementById('sidebar-time');
+      const sidebarDate = document.getElementById('sidebar-date');
+      if (sidebarTime) sidebarTime.textContent = timeString;
+      if (sidebarDate) sidebarDate.textContent = dateString;
+    }
+    
+    // 1秒ごとに更新
+    setInterval(updateClock, 1000);
+    
+    // 初回実行
+    updateClock();
+  </script>
 </body>
 </html>
