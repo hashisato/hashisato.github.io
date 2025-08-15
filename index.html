@@ -2,263 +2,91 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>hashisato</title>
+  <title>hashisato's Homepage</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
-  <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
+  <meta name="description" content="Welcome to hashisato's personal homepage! Created in the spirit of the early internet.">
 </head>
 <body>
   <header class="hero">
-    <h1 id="site-title" style="cursor:pointer;">hashisato</h1>
-    <p id="intro-text">hashisatoの自己紹介ページです</p>
-    <nav>
-      <ul class="nav-list">
-        <li><a href="#" class="nav-link" id="nav-home">Home</a></li>
-        <li><a href="#" class="nav-link" id="nav-github">Products</a></li>
-        <li>
-          <button id="lang-toggle" class="lang-toggle-btn" aria-label="Toggle Language" type="button">
-            <span id="lang-toggle-icon" style="font-size:1.2em;vertical-align:middle;">🌐</span>
-            <span id="lang-toggle-text">日本語</span>
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <h1>hashisato</h1>
+    <p>hashisatoの自己紹介ページです</p>
   </header>
+  
   <main>
-    <section id="github-link">
-      <h2 id="github-title">GitHub</h2>
-      <p id="github-desc">個人開発のリポジトリを公開しています</p>
-      <a id="github-btn" href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
+    <section class="about-text">
+      <h2>自己紹介</h2>
+      <p>
+        hashisatoです。<br>
+        色々勉強中です！よろしくお願いします！<br><br>
+        <strong>最終更新日:</strong> 2025年8月15日
+      </p>
     </section>
-    <section id="x-link">
-      <h2 id="sns-title">X (旧Twitter)</h2>
-      <p id="sns-desc">日々の活動を発信しています</p>
-      <a id="sns-btn" href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
-    </section>
-    <section id="github-section" style="display:none;">
-      <h2 id="contrib-title">GitHub Contributions Graph</h2>
-      <div class="github-graph-wrapper" style="display:flex; justify-content:center;">
-        <img src="https://ghchart.rshah.org/hashisato" alt="hashisato's GitHub contribution graph" style="width:100%;max-width:700px;">
+
+    <div class="card-list">
+      <div class="card">
+        <h2>GitHub</h2>
+        <p>個人開発のリポジトリを公開しています</p>
+        <a href="https://github.com/hashisato" class="btn" target="_blank">GitHubを見る</a>
       </div>
-      <h2 id="repo-title">代表的なリポジトリ</h2>
-      <div style="display: flex; justify-content: center;">
-        <a href="https://github.com/hashisato/itp1-rust" target="_blank" rel="noopener noreferrer">
-          <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=itp1-rust" alt="itp1-rust" style="width:100%;max-width:700px;">
-        </a>
-        <a href="https://github.com/hashisato/rsa-encryption-decryption" target="_blank" rel="noopener noreferrer">
-          <img src="https://github-readme-stats.vercel.app/api/pin/?username=hashisato&repo=rsa-encryption-decryption" alt="rsa-encryption-decryption" style="width:100%;max-width:700px;">
+      <div class="card">
+        <h2>X（Twitter）</h2>
+        <p>日々の活動や技術情報を発信しています</p>
+        <a href="https://x.com/hashisato_" class="btn" target="_blank">Xを見る</a>
       </div>
-      <a id="all-repo-btn" href="https://github.com/hashisato?tab=repositories" class="btn" target="_blank">全てのリポジトリを見る</a>
+    </div>
+
+    <!-- GitHub制作物紹介セクション -->
+    <section class="projects-section">
+      <h2>制作物紹介</h2>
+      <p>最近作ったプログラムたちです〜(´∀｀) まだまだ勉強中ですが…</p>
+      
+      <div class="projects-list">
+        <div class="project-card">
+          <h3>itp1-rust</h3>
+          <p>
+            Rustの勉強で作った競技プログラミング問題の解答集です！<br>
+            AtCoderのITP1問題をRustで解いてみました(´・ω・｀)<br>
+            <strong>使用技術:</strong> Rust
+          </p>
+          <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">詳細を見る</a>
+        </div>
+        
+        <div class="project-card">
+          <h3>RSA暗号化・復号化プログラム</h3>
+          <p>
+            暗号化の仕組みを勉強したくて作ってみました！<br>
+            RSA暗号の実装にチャレンジ…まだまだ改良の余地ありです(汗<br>
+            <strong>使用技術:</strong> Python
+          </p>
+          <a href="https://github.com/hashisato/rsa-encryption-decryption" class="btn" target="_blank">詳細を見る</a>
+        </div>
+        
+        <div class="project-card">
+          <h3>このホームページ</h3>
+          <p>
+            90年代風のレトロなデザインにしてみました〜♪<br>
+            HTMLとCSSだけのシンプル構成です(´∀｀)<br>
+            <strong>使用技術:</strong> HTML, CSS
+          </p>
+          <a href="https://github.com/hashisato/hashisato-portfolio" class="btn" target="_blank">ソースコード</a>
+        </div>
+      </div>
+      
+      <div class="more-projects">
+        <p>他にも色々作ってます！全部見たい方はこちら↓</p>
+        <a href="https://github.com/hashisato?tab=repositories" class="btn btn-large" target="_blank">全ての制作物を見る</a>
+      </div>
     </section>
+    <!-- GitHub制作物紹介セクション -->
   </main>
+  
   <footer>
-    <p>&copy; 2025 hashisato</p>
+    <p>Copyright &copy; 2025 hashisato - All Rights Reserved</p>
+    <p style="font-size: 0.7em; margin-top: 0.5em;">
+      このサイトは Netscape Navigator 4.0 以上での閲覧を推奨します
+    </p>
   </footer>
-
-  <!-- 固定ナビ -->
-  <style>
-    .fixed-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      background: rgba(80,165,246,0.97);
-      z-index: 1000;
-      box-shadow: 0 2px 12px rgba(45,95,164,0.13);
-      display: none;
-      justify-content: center;
-      padding: 0.5em 0;
-      animation: slideDownNav 0.3s;
-    }
-    @keyframes slideDownNav {
-      from { transform: translateY(-100%);}
-      to { transform: translateY(0);}
-    }
-  </style>
-  <nav id="fixed-nav" class="fixed-nav">
-    <ul class="nav-list">
-      <li><a href="#" class="nav-link" id="fixed-nav-home">Home</a></li>
-      <li><a href="#" class="nav-link" id="fixed-nav-github">Products</a></li>
-      <li>
-        <button id="fixed-lang-toggle" class="lang-toggle-btn" aria-label="Toggle Language" type="button">
-          <span id="fixed-lang-toggle-icon" style="font-size:1.2em;vertical-align:middle;">🌐</span>
-          <span id="fixed-lang-toggle-text">日本語</span>
-        </button>
-      </li>
-    </ul>
-  </nav>
-
-  <script>
-    // --- ページ切り替え・ナビ同期 ---
-    const navHome = document.getElementById('nav-home');
-    const navGithub = document.getElementById('nav-github');
-    const fixedNavHome = document.getElementById('fixed-nav-home');
-    const fixedNavGithub = document.getElementById('fixed-nav-github');
-    const githubLinkSection = document.getElementById('github-link');
-    const xLinkSection = document.getElementById('x-link');
-    const githubSection = document.getElementById('github-section');
-
-    function showHome(e) {
-      if (e) e.preventDefault();
-      githubLinkSection.style.display = '';
-      xLinkSection.style.display = '';
-      githubSection.style.display = 'none';
-      navHome.classList.add('active');
-      fixedNavHome.classList.add('active');
-      navGithub.classList.remove('active');
-      fixedNavGithub.classList.remove('active');
-    }
-    function showGithub(e) {
-      if (e) e.preventDefault();
-      githubLinkSection.style.display = 'none';
-      xLinkSection.style.display = 'none';
-      githubSection.style.display = '';
-      navHome.classList.remove('active');
-      fixedNavHome.classList.remove('active');
-      navGithub.classList.add('active');
-      fixedNavGithub.classList.add('active');
-    }
-    navHome.onclick = showHome;
-    fixedNavHome.onclick = showHome;
-    navGithub.onclick = showGithub;
-    fixedNavGithub.onclick = showGithub;
-    // 初期表示でHomeをactiveに
-    showHome();
-
-    // サイトタイトルクリックでHome表示
-    document.getElementById('site-title').onclick = showHome;
-
-    // 固定ナビ表示制御
-    (function() {
-      const hero = document.querySelector('.hero');
-      const fixedNav = document.getElementById('fixed-nav');
-      let ticking = false;
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          window.requestAnimationFrame(function() {
-            const heroBottom = hero.offsetTop + hero.offsetHeight;
-            if (window.scrollY >= heroBottom) {
-              fixedNav.style.display = 'flex';
-            } else {
-              fixedNav.style.display = 'none';
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      });
-    })();
-
-    // 言語切替
-    const langData = {
-      ja: {
-        intro: "hashisatoの自己紹介ページです",
-        githubTitle: "GitHub",
-        githubDesc: "個人開発のリポジトリを公開しています",
-        githubBtn: "GitHubを見る",
-        snsTitle: "X (旧Twitter)",
-        snsDesc: "日々の活動を発信しています",
-        snsBtn: "Xを見る",
-        langBtn: "English",
-        contribTitle: "GitHub Contributions Graph",
-        repoTitle: "代表的なリポジトリ",
-        allRepoBtn: "全てのリポジトリを見る"
-      },
-      en: {
-        intro: "This is hashisato's profile page",
-        githubTitle: "GitHub",
-        githubDesc: "My personal repositories are public",
-        githubBtn: "View GitHub",
-        snsTitle: "X (formerly Twitter)",
-        snsDesc: "I share my daily activities",
-        snsBtn: "View X",
-        langBtn: "日本語",
-        contribTitle: "GitHub Contributions Graph",
-        repoTitle: "Featured Repositories",
-        allRepoBtn: "View All Repositories"
-      }
-    };
-
-    let currentLang = "ja";
-    function setLang(lang) {
-      document.getElementById('lang-toggle-text').textContent = langData[lang].langBtn;
-      document.getElementById('fixed-lang-toggle-text').textContent = langData[lang].langBtn;
-      document.getElementById('intro-text').textContent = langData[lang].intro;
-      document.getElementById('github-title').textContent = langData[lang].githubTitle;
-      document.getElementById('github-desc').textContent = langData[lang].githubDesc;
-      document.getElementById('github-btn').textContent = langData[lang].githubBtn;
-      document.getElementById('sns-title').textContent = langData[lang].snsTitle;
-      document.getElementById('sns-desc').textContent = langData[lang].snsDesc;
-      document.getElementById('sns-btn').textContent = langData[lang].snsBtn;
-      document.getElementById('contrib-title').textContent = langData[lang].contribTitle;
-      document.getElementById('repo-title').textContent = langData[lang].repoTitle;
-      document.getElementById('all-repo-btn').textContent = langData[lang].allRepoBtn;
-    }
-    setLang(currentLang);
-
-    document.getElementById('lang-toggle').onclick = function() {
-      currentLang = currentLang === "ja" ? "en" : "ja";
-      setLang(currentLang);
-    };
-    document.getElementById('fixed-lang-toggle').onclick = function() {
-      document.getElementById('lang-toggle').click();
-      document.getElementById('fixed-lang-toggle-text').textContent =
-        document.getElementById('lang-toggle-text').textContent;
-    };
-    // 言語切替時に固定ナビのテキストも同期
-    const observer = new MutationObserver(() => {
-      document.getElementById('fixed-lang-toggle-text').textContent =
-        document.getElementById('lang-toggle-text').textContent;
-    });
-    observer.observe(document.getElementById('lang-toggle-text'), { childList: true });
-
-    // 時間帯で背景グラデーション変更（無効化済み）
-    /*
-    (function() {
-      const body = document.body;
-      const hour = (new Date().getUTCHours() + 9) % 24;
-      if (hour >= 5 && hour < 11) {
-        body.style.background = "linear-gradient(120deg, #fffbe7 0%, #fff9c4 100%)";
-      } else if (hour >= 11 && hour < 17) {
-        body.style.background = "linear-gradient(120deg, #ffffff 0%, #ffe082 100%)";
-      } else if (hour >= 17 && hour < 19) {
-        body.style.background = "linear-gradient(120deg, #ffe082 0%, #232b3b 100%)";
-      } else {
-        body.style.background = "linear-gradient(120deg, #1b519c 0%, #232b3b 100%)";
-      }
-    })();
-    
-
-    // hero自動スクロール
-    (function() {
-      const hero = document.querySelector('.hero');
-      let lastScrollY = window.scrollY;
-      let scrollTimeout = null;
-      let isAutoScrolling = false;
-      window.addEventListener('scroll', function() {
-        if (isAutoScrolling) return;
-        if (scrollTimeout) clearTimeout(scrollTimeout);
-        scrollTimeout = setTimeout(function() {
-          const heroBottom = hero.offsetTop + hero.offsetHeight;
-          const threshold = 2;
-          // 下方向：heroから少しでも下に行ったらheroの真下まで
-          if (window.scrollY > threshold && window.scrollY < heroBottom - threshold && window.scrollY > lastScrollY) {
-            isAutoScrolling = true;
-            window.scrollTo({ top: heroBottom, behavior: 'smooth' });
-            setTimeout(() => { isAutoScrolling = false; }, 500);
-          }
-          // 上方向：heroの真下から上に戻ったらheroの一番上まで
-          else if (window.scrollY < heroBottom - threshold && lastScrollY > window.scrollY && window.scrollY > threshold) {
-            isAutoScrolling = true;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            setTimeout(() => { isAutoScrolling = false; }, 500);
-          }
-          lastScrollY = window.scrollY;
-        }, 100);
-      });
-    })();
-    */
-  </script>
 </body>
 </html>
