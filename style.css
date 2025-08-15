@@ -203,6 +203,16 @@ main {
   text-align: center;
 }
 
+.projects-section h2::before {
+  content: '◆ ';
+  color: #00ffd9;
+}
+
+.projects-section h2::after {
+  content: ' ◆';
+  color: #00ffd9;
+}
+
 .projects-section > p {
   text-align: center;
   color: #000000;
@@ -213,7 +223,7 @@ main {
 .projects-list {
   display: grid;
   gap: 1em;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* 2列固定 */
   margin-bottom: 2em;
 }
 
@@ -222,7 +232,7 @@ main {
   border: 2px outset #c0c0c0;
   padding: 1.2em;
   box-shadow: 1px 1px 0px #808080;
-  min-height: 200px;
+  min-height: 200px; /* デフォルトの最小高さ */
   display: flex;
   flex-direction: column;
 }
@@ -252,20 +262,6 @@ main {
 .project-card .btn {
   margin-top: 1em;
   align-self: flex-start;
-}
-
-.more-projects {
-  text-align: center;
-  background: #e0e0e0;
-  border: 2px inset #c0c0c0;
-  padding: 1.5em;
-  margin-top: 2em;
-}
-
-.more-projects p {
-  color: #000000;
-  margin: 0 0 1em 0;
-  font-family: 'MS Sans Serif', sans-serif;
 }
 
 /* ===== ボタン ===== */
@@ -337,6 +333,7 @@ img {
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
+  user-drag: none;
 }
 
 /* ===== アニメーション ===== */
@@ -355,20 +352,27 @@ img {
   100% { color: #ffff00; }
 }
 
-/* ===== レスポンシブ ===== */
-@media (max-width: 1200px) {
+/* ===== レスポンシブデザイン ===== */
+
+/* 1列表示 (600px以下) */
+@media screen and (max-width: 600px) {
   .projects-list {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 999px) {
-  .left-clock {
-    display: none;
+/* タブレット以下 (768px以下) */
+@media screen and (max-width: 768px) {
+  .hero {
+    padding: 1.5em 1em;
   }
-}
-
-@media (max-width: 768px) {
+  
+  .hero::after {
+    font-size: 0.6em;
+    padding: 0.4em 0.8em;
+    bottom: 1.5em;
+  }
+  
   main {
     padding: 1em;
   }
@@ -376,6 +380,10 @@ img {
   .about-text {
     padding: 1.5em;
     margin-bottom: 1.5em;
+  }
+  
+  .about-text h2 {
+    font-size: 1.5em;
   }
   
   .card-list {
@@ -387,31 +395,53 @@ img {
     padding: 1em;
   }
   
+  .card h2 {
+    font-size: 1.2em;
+  }
+  
   .projects-section {
     padding: 1.5em;
     margin: 1.5em 0;
   }
   
-  .projects-list {
-    grid-template-columns: 1fr;
-    gap: 1em;
+  .projects-section h2 {
+    font-size: 1.5em;
   }
   
   .project-card {
     padding: 1em;
-    min-height: 180px;
+    min-height: auto; /* 1列時は高さを自動調整 */
   }
   
-  .hero::after {
-    font-size: 0.6em;
-    padding: 0.4em 0.8em;
-    bottom: 1.5em;
+  .project-card h3 {
+    font-size: 1em;
+  }
+  
+  .project-card p {
+    font-size: 0.8em;
   }
 }
 
-@media (max-width: 480px) {
+/* スマートフォン (480px以下) */
+@media screen and (max-width: 480px) {
   .hero {
     padding: 1em;
+  }
+  
+  .hero h1 {
+    font-size: clamp(2em, 10vw, 3em);
+  }
+  
+  .hero p {
+    font-size: clamp(0.9em, 4vw, 1.2em);
+  }
+  
+  .hero::after {
+    content: '✨ Welcome! ✨';
+    font-size: 0.5em;
+    padding: 0.3em 0.6em;
+    bottom: 1em;
+    border: 1px solid #00ff00;
   }
   
   main {
@@ -420,6 +450,10 @@ img {
   
   .about-text {
     padding: 1em;
+  }
+  
+  .about-text h2 {
+    font-size: 1.3em;
   }
   
   .card-list {
@@ -445,40 +479,48 @@ img {
     font-size: 0.7em;
   }
   
-  .projects-list {
-    gap: 0.8em;
+  .projects-section {
+    padding: 1em;
+    margin: 1em 0;
+  }
+  
+  .projects-section h2 {
+    font-size: 1.3em;
   }
   
   .project-card {
     padding: 0.8em;
-    min-height: 160px;
+    min-height: auto; /* 1列時は高さを自動調整 */
   }
   
   .project-card h3 {
-    font-size: 1em;
+    font-size: 0.9em;
   }
   
   .project-card p {
-    font-size: 0.8em;
+    font-size: 0.75em;
   }
   
-  .hero::after {
-    content: '✨ Welcome! ✨';
-    font-size: 0.5em;
-    padding: 0.3em 0.6em;
-    bottom: 1em;
-    border: 1px solid #00ff00;
+  .btn-large {
+    padding: 0.6em 1.5em;
+    font-size: 0.9em;
+  }
+  
+  footer {
+    padding: 0.8em;
+    font-size: 0.7em;
   }
 }
 
-@media (max-width: 360px) {
-  .projects-list {
-    grid-template-columns: 1fr;
+/* 極小画面 (360px以下) */
+@media screen and (max-width: 360px) {
+  .hero {
+    padding: 0.8em;
   }
   
-  .project-card {
-    padding: 0.7em;
-    min-height: 140px;
+  .hero h1 {
+    font-size: clamp(1.8em, 12vw, 2.5em);
+    letter-spacing: 0.1em;
   }
   
   .hero::after {
@@ -486,5 +528,64 @@ img {
     font-size: 0.4em;
     padding: 0.2em 0.4em;
     bottom: 0.8em;
+  }
+  
+  main {
+    padding: 0.3em;
+  }
+  
+  .about-text {
+    padding: 0.8em;
+  }
+  
+  .about-text h2 {
+    font-size: 1.2em;
+  }
+  
+  .about-text p {
+    font-size: 0.9em;
+  }
+  
+  .card {
+    padding: 0.8em;
+  }
+  
+  .card h2 {
+    font-size: 1em;
+  }
+  
+  .card p {
+    font-size: 0.75em;
+  }
+  
+  .btn {
+    padding: 0.3em 0.8em;
+    font-size: 0.65em;
+  }
+  
+  .projects-section {
+    padding: 0.8em;
+  }
+  
+  .projects-section h2 {
+    font-size: 1.2em;
+  }
+  
+  .project-card {
+    padding: 0.7em;
+    min-height: auto; /* 1列時は高さを自動調整 */
+  }
+  
+  .project-card h3 {
+    font-size: 0.85em;
+  }
+  
+  .project-card p {
+    font-size: 0.7em;
+  }
+  
+  .btn-large {
+    padding: 0.5em 1.2em;
+    font-size: 0.8em;
   }
 }
