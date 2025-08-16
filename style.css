@@ -208,7 +208,12 @@ main {
 
 .projects-section h2::after {
   content: ' ◆';
-  color: #00ff00ff;
+  color: #00ff00;
+}
+
+.projects-section h2::after {
+  content: ' ◆';
+  color: #00ff00;
 }
 
 .projects-section > p {
