@@ -205,12 +205,12 @@ main {
 
 .projects-section h2::before {
   content: '◆ ';
-  color: #00ffd9;
+  color: #00ff00ff;
 }
 
 .projects-section h2::after {
   content: ' ◆';
-  color: #00ffd9;
+  color: #00ff00ff;
 }
 
 .projects-section > p {
@@ -261,7 +261,7 @@ main {
 
 .project-card .btn {
   margin-top: 1em;
-  align-self: flex-start;
+  align-self: center; /* flex-start → center に変更 */
 }
 
 /* ===== ボタン ===== */
