@@ -301,7 +301,7 @@ main {
   box-shadow: 1px 1px 0px #808080;
   font-family: 'MS Sans Serif', sans-serif;
   font-size: 0.8em;
-  text-transform: uppercase;
+  text-transform: none;
 }
 
 .btn:hover {
