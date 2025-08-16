@@ -47,9 +47,12 @@
           <div class="project-card">
             <h3>itp1-rust</h3>
             <p>
-              Rustの勉強で作った競技プログラミング問題の解答集です！<br>
-              AtCoderのITP1問題をRustで解いてみました(´・ω・｀)<br>
-              <strong>使用技術:</strong> Rust
+              AOJ（Aizu Online Judge）のITP1問題をRustで解いた解答集です。<br>
+              ディレクトリごとに各問題のRustコードが入っています。<br>
+              <strong>目的:</strong> Rustの基本文法習得・競技プログラミング練習<br>
+              <strong>使い方:</strong> Rust環境でcargo runまたはrustcで実行<br>
+              <strong>参考:</strong> AOJ ITP1, Rust公式ドキュメント<br>
+              <strong>ライセンス:</strong> MIT
             </p>
             <a href="https://github.com/hashisato/itp1-rust" class="btn" target="_blank">詳細を見る</a>
           </div>
@@ -57,31 +60,14 @@
           <div class="project-card">
             <h3>RSA暗号化・復号化プログラム</h3>
             <p>
-              暗号化の仕組みを勉強したくて作ってみました！<br>
-              RSA暗号の実装にチャレンジ…まだまだ改良の余地ありです(汗<br>
-              <strong>使用技術:</strong> Python
+              RustでRSA暗号化・復号化とデジタル署名を実装したリポジトリです。<br>
+              コマンドライン引数で暗号化/署名機能を切り替え可能。<br>
+              <strong>特徴:</strong> 暗号化・復号化、署名・検証、対話型入力<br>
+              <strong>使い方:</strong> <code>cargo run -- crypto</code> / <code>cargo run -- signature</code><br>
+              <strong>構成:</strong> src/rsa_crypto.rs, src/rsa_signature.rs, src/main.rs, src/lib.rs<br>
+              <strong>参考:</strong> RustによるRSA実装例
             </p>
             <a href="https://github.com/hashisato/rsa-encryption-decryption" class="btn" target="_blank">詳細を見る</a>
-          </div>
-          
-          <div class="project-card">
-            <h3>このホームページ</h3>
-            <p>
-              90年代風のレトロなデザインにしてみました〜♪<br>
-              HTMLとCSSだけのシンプル構成です(´∀｀)<br>
-              <strong>使用技術:</strong> HTML, CSS
-            </p>
-            <a href="https://github.com/hashisato/hashisato-portfolio" class="btn" target="_blank">ソースコード</a>
-          </div>
-
-          <div class="project-card">
-            <h3>このホームページ</h3>
-            <p>
-              90年代風のレトロなデザインにしてみました〜♪<br>
-              HTMLとCSSだけのシンプル構成です(´∀｀)<br>
-              <strong>使用技術:</strong> HTML, CSS
-            </p>
-            <a href="https://github.com/hashisato/hashisato-portfolio" class="btn" target="_blank">ソースコード</a>
           </div>
         </div>
         
@@ -90,6 +76,8 @@
           <a href="https://github.com/hashisato?tab=repositories" class="btn btn-large" target="_blank">全ての制作物を見る</a>
         </div>
       </section>
+      <!-- GitHub制作物紹介セクションここまで -->
+
     </div>
   </main>
   
@@ -150,37 +138,6 @@
     document.ondragstart = function() {
       return false;
     };
-
-    function updateClock() {
-      const now = new Date();
-      
-      // 時刻表示 (HH:MM:SS)
-      const timeString = now.toLocaleTimeString('ja-JP', {
-        hour12: false,
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-      });
-      
-      // 日付表示 (YYYY/MM/DD)
-      const dateString = now.toLocaleDateString('ja-JP', {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit'
-      });
-      
-      // サイドバー時計の更新
-      const sidebarTime = document.getElementById('sidebar-time');
-      const sidebarDate = document.getElementById('sidebar-date');
-      if (sidebarTime) sidebarTime.textContent = timeString;
-      if (sidebarDate) sidebarDate.textContent = dateString;
-    }
-    
-    // 1秒ごとに更新
-    setInterval(updateClock, 1000);
-    
-    // 初回実行
-    updateClock();
   </script>
 </body>
 </html>
