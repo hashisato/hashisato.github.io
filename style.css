@@ -70,7 +70,7 @@ body {
   margin: 0 0 0.5em 0;
   font-weight: bold;
   letter-spacing: 0.2em;
-  text-shadow: 2px 2px 0px #00000000;
+  /*text-shadow: 2px 2px 0px transparent, 4px 4px 0px #000000;*/
   font-family: 'Times New Roman', serif;
   animation: rainbow 3s infinite;
 }
