@@ -19,8 +19,8 @@ body {
 
 /* ===== ヒーロー ===== */
 .hero {
-  background: linear-gradient(45deg, #008080 0%, #000080 50%, #800080 100%);
   position: relative;
+  background: linear-gradient(45deg, #008080 0%, #000080 50%, #800080 100%);
   color: #ffff00;
   min-height: 100vh;
   display: flex;
@@ -63,12 +63,13 @@ body {
 }
 
 .hero h1 {
+  position: relative;
+  z-index: 2;
+  color: #ffff00;
   font-size: clamp(3em, 8vw, 5em);
   margin: 0 0 0.5em 0;
   font-weight: bold;
   letter-spacing: 0.2em;
-  position: relative;
-  z-index: 2;
   text-shadow: 2px 2px 0px #000000;
   font-family: 'Times New Roman', serif;
   animation: rainbow 3s infinite;
