@@ -10,13 +10,13 @@
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
   <style>
     :root {
-      --main-bg: #f7f9fc;
-      --card-bg: #fff;
-      --primary: #0015ff;
-      --accent: #0008ff;
-      --border: #e5e7eb;
-      --text: #222;
-      --muted: #666;
+      --main-bg: #000000;   /* サイト全体の背景色 */
+      --card-bg: #fff;      /* カードの背景色 */
+      --primary: #0015ff;   /* プライマリカラー */
+      --accent: #0008ff;    /* アクセントカラー */
+      --border: #e5e7eb;    /* ボーダーの色 */
+      --text: #222;         /* テキストの色 */
+      --muted: #666;        /* ミュートテキストの色 */
       --radius: 1rem;
       --shadow: 0 8px 24px rgba(30, 64, 175, .06);
     }
@@ -107,7 +107,7 @@
       display: flex;
       align-items: center;
       gap: .4rem;
-      color: var(--primary);
+      color: #ffffff; /* color: var(--primary); */
       background: none;
       border: none;
       font-size: 1.07rem;
@@ -140,16 +140,20 @@
     .section-title {
       font-size: 2rem;
       font-weight: bold;
+      color: #ffffff;
       text-align: center;
       margin: 1.5rem auto 2rem auto;
       position: relative;
       width: fit-content;
-      background: linear-gradient(transparent 60%, #e5e7eb 60%);
+      background: linear-gradient(transparent 60%, #1ebfff 60%);
       border-radius: .6rem;
       padding: 0 .7rem;
       display: flex;
       gap: .5rem;
       align-items: center;
+    }
+    .section-title svg {
+      stroke: #ffffff;
     }
     .cards-grid {
       display: grid;
@@ -252,11 +256,39 @@
       .contribution { padding: 1rem .2rem;}
       .section-title { font-size: 1.4rem; padding: 0 .2rem;}
     }
+
+    canvas {
+        display: block;
+        height: 55vh;
+        width: 78vw;
+        margin: 5vh auto 0 auto;
+        background: #f7f9fc;
+        box-shadow: 0 4px 24px rgba(30,64,175,.10);
+        border-radius: 1.2rem;
+        border: 1px solid var(--border);
+        max-width: 900px;
+    }
+    .background-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: -1;
+      pointer-events: none;
+      background: transparent;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      max-width: none;
+    }
   </style>
   <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
 </head>
 
 <body>
+  <canvas id="game" class="background-canvas"></canvas>
   <nav class="navbar">
     <div class="navbar-content">
       <a class="navbar-title" href="./">
@@ -339,5 +371,168 @@
   <footer class="footer">
     © 2025 hashisato
   </footer>
+
+  <script>
+    console.clear();
+
+    class Cell {
+        constructor(index, gridOptions = {}) {
+            const { cellSize, gridWidth } = gridOptions;
+            this.index = index;
+            this.isActive = Math.random() > 0.5;
+            this.x = (index % gridWidth) * cellSize;
+            this.y = Math.floor(index / gridWidth) * cellSize;
+        }
+    }
+
+    class GameOfLife {
+        constructor(canvasId) {
+            this.canvas = document.getElementById(canvasId);
+            this.context = this.canvas.getContext("2d");
+
+            this.tickSpeed = 100;
+            this.cellSize = 10;
+            this.tick = null;
+            this.gridHeight = null;
+            this.gridWidth = null;
+            this.grid = null;
+
+            this.init();
+            windowResize().listen(() => this.init());
+        }
+
+        init() {    
+            this.stop();
+            this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
+            this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
+            this.canvas.width = this.gridWidth * this.cellSize;
+            this.canvas.height = this.gridHeight * this.cellSize;
+            this.grid = this.generateGrid();
+            this.start();
+        }
+
+        start() {
+            this.tick = setInterval(() => {
+                this.update();
+            }, this.tickSpeed);
+        }
+
+        stop() {
+            clearInterval(this.tick);
+        }
+
+        update() {
+            this.grid = this.grid.map((cell) => ({
+                ...cell,
+                isActive: this.livesToFightAnotherDay(cell)
+            }));
+
+            this.redraw();
+        }
+
+        redraw() {
+            const { canvas, context, grid, cellSize } = this;
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.fillStyle = "#00562f"; // セルの色
+
+            grid.forEach((cell) => {
+                const { x, y, isActive } = cell;
+                if (isActive) {
+                    context.beginPath();
+                    context.rect(x, y, cellSize, cellSize);
+                    context.fill();
+                }
+            });
+        }
+
+        getActiveNeighbors({ index }) {
+            const { grid, gridWidth } = this;
+            return [
+                grid[index - 1 - gridWidth],
+                grid[index - gridWidth],
+                grid[index + 1 - gridWidth],
+                grid[index - 1],
+                grid[index + 1],
+                grid[index - 1 + gridWidth],
+                grid[index + gridWidth],
+                grid[index + 1 + gridWidth]
+            ].filter((cell) => cell !== undefined && cell.isActive);
+        }
+
+        livesToFightAnotherDay(cell) {
+            const activeNeighbors = this.getActiveNeighbors(cell).length;
+
+            if (activeNeighbors === 3) {
+                return true;
+            } else if (activeNeighbors === 2 && cell.isActive) {
+                return true;
+            }
+
+            return false;
+        }
+
+        generateGrid() {
+            const { cellSize, gridWidth, gridHeight } = this;
+            return Array(gridWidth * gridHeight)
+                .fill("x")
+                .map((_, i) => new Cell(i, { cellSize, gridWidth }));
+        }
+    }
+
+    const game = new GameOfLife("game");
+
+    function windowResize() {
+        const windowResize = {
+            callbacks: [],
+            running: false,
+
+            init() {
+                window.addEventListener("resize", windowResize.resize, {
+                    passive: true
+                });
+            },
+
+            runCallbacks() {
+                windowResize.callbacks.forEach((callback) => {
+                    callback();
+                });
+                windowResize.running = false;
+            },
+
+            resize() {
+                if (!windowResize.running) {
+                    windowResize.running = true;
+
+                    if (window.requestAnimationFrame) {
+                        window.requestAnimationFrame(() =>
+                            windowResize.runCallbacks()
+                        );
+                    } else {
+                        setTimeout(() => windowResize.runCallbacks(), 100);
+                    }
+                }
+            },
+
+            addCallback(callback) {
+                if (callback) {
+                    windowResize.callbacks.push(callback);
+                }
+            },
+
+            hasCallbacks() {
+                return windowResize.callbacks.length > 0;
+            }
+        };
+
+        return {
+            listen: (callback) => {
+                if (!windowResize.hasCallbacks()) {
+                    windowResize.init();
+                }
+                windowResize.addCallback(callback);
+            }
+        };
+    }
+    </script>
 </body>
 </html>
