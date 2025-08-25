@@ -17,7 +17,6 @@ https://hashisato.github.io/
 ## Technologies Used
 - HTML
 - CSS
-- JavaScript
 
 ## Author
 hashisato
