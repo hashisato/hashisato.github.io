@@ -5,7 +5,7 @@ It includes a self-introduction, GitHub repositories, SNS links, and more.
 Supports both Japanese and English languages.
 
 ## Website URL
-https://hashisato.github.io/hashisato-portfolio/
+https://hashisato.github.io/
 
 ## Main Features
 - Self-introduction
