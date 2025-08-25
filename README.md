@@ -11,8 +11,6 @@ https://hashisato.github.io/
 - Self-introduction
 - GitHub repository list
 - SNS (X/Twitter) link
-- GitHub Contributions graph
-- Japanese/English language toggle
 
 ## Technologies Used
 - HTML
