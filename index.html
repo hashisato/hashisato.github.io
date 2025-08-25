@@ -533,6 +533,18 @@
             }
         };
     }
+    // GitHub貢献グラフ画像を自動更新する（1日1回リロード）
+    function autoReloadGithubChart() {
+      const chartImg = document.querySelector('img[alt="hashisato\'s Github chart"]');
+      if (chartImg) {
+        // 日付パラメータを付与してキャッシュを回避
+        const baseUrl = "https://ghchart.rshah.org/0536e7/hashisato";
+        const today = new Date().toISOString().slice(0, 10);
+        chartImg.src = `${baseUrl}?d=${today}`;
+      }
+    }
+    // ページ表示時に実行
+    autoReloadGithubChart();
     </script>
 </body>
 </html>
