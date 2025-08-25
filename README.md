@@ -1,4 +1,4 @@
-# hashisato-portfolio
+# hashisato.github.io
 
 This is the portfolio site of hashisato.  
 It includes a self-introduction, GitHub repositories, SNS links, and more.  
