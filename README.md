@@ -13,7 +13,6 @@ https://hashisato.github.io/
 
 ## Technologies Used
 - HTML
-- CSS
 
 ## Author
 hashisato
