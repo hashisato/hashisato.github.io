@@ -3,18 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
-  <title>hashisato's portfolio</title>
-  <meta name="description" content="大学生です。主に個人開発をしています。">
-  <meta property="og:title" content="hashisato's portfolio">
-  <meta property="og:description" content="大学生です。主に個人開発をしています。">
+  <title>Profile | hashisato's portfolio</title>
+  <meta name="description" content="プロフィール">
+  <meta property="og:title" content="Profile | hashisato's portfolio">
+  <meta property="og:description" content="プロフィール">
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
   <style>
+    :root {
+      --main-bg: #000000;   /* サイト全体の背景色 */
+      --card-bg: #fff;      /* カードの背景色 */
+      --primary: #1ebfff;   /* プライマリカラー */
+      --accent: #0008ff;    /* アクセントカラー */
+      --border: #e5e7eb;    /* ボーダーの色 */
+      --text: #ffffff;         /* テキストの色 */
+      --muted: #666;        /* ミュートテキストの色 */
+      --radius: 1rem;
+      --shadow: 0 8px 24px rgba(30, 64, 175, .06);
+    }
     body {
-      background: #fff;
-      color: #222;
-      font-family: ui-sans-serif, system-ui, sans-serif;
+      background: var(--main-bg);
+      color: var(--text);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
       margin: 0;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      /* スクロールバーを非表示に */
+      overflow-y: scroll;
+      scrollbar-width: none; /* Firefox用 */
+    }
+    body::-webkit-scrollbar {
+      display: none; /* Chrome, Safari用 */
+    }
+    .main-container {
+      flex: 1;
+      max-width: 1024px;
+      margin: 6rem auto 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+      /* スクロールバーがあっても余白でfooterが下に来る */
     }
     .navbar {
       position: fixed;
@@ -39,7 +65,7 @@
       gap: .5rem;
       font-size: 1.3rem;
       font-weight: bold;
-      color: #28a3cc;
+      color: var(--accent);
       text-decoration: none;
     }
     .navbar-title img {
@@ -47,12 +73,7 @@
       height: 2.5rem;
       border-radius: 50%;
       object-fit: cover;
-      margin-right: 4.5rem;
-    }
-    .main-container {
-      max-width: 1024px;
-      margin: 6rem auto 0 auto;
-      padding: 0 1.5rem 3rem 1.5rem;
+      margin-right: .5rem;
     }
     .section-title {
       font-size: 2.25rem;
@@ -61,85 +82,155 @@
       align-items: center;
       gap: .5rem;
       margin-bottom: 2rem;
-      color: #28a3cc;
-      justify-content: center; /* ← 追加：中央寄せ */
+      color: #28a3cc; /* Profileの色 */
+      justify-content: center;
+    }
+    .section-title svg {
+      stroke: #28a3cc;
     }
     .profile-flex {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       gap: 2rem;
       margin-bottom: 2.5rem;
     }
     .profile-img {
       border-radius: 9999px;
-      width: 240px;
-      height: 240px;
+      height: 13em;
+      width: 13em;
       object-fit: cover;
       max-width: 50vw;
       max-height: 50vw;
       background: #eee;
       align-self: flex-start;
-      margin-top: 0rem;
+      margin-top: 0;
+      margin-right: 0.8rem;
+      display: block;
+      align-self: flex-start;
     }
     .profile-table {
       font-size: 1rem;
-      text-align: center;
+      text-align: left;
       width: 100%;
       max-width: 350px;
+      min-width: 320px;
       border-collapse: collapse;
       margin: 0 auto;
+    }
+    .profile-table a {
+      color: var(--primary);
+      font-weight: bold;
+      text-decoration: underline;
+      transition: color 0.2s;
+    }
+    .profile-table a:hover {
+      color: var(--accent); 
     }
     .profile-table td {
       padding: .3rem .7rem;
       vertical-align: top;
+      white-space: nowrap;
     }
     .profile-table .font-bold {
       font-weight: bold;
-      color: #28a3cc;
+      color: #ffffff;
       width: 7em;
     }
     .profile-bio {
       max-width: 600px;
       margin: 2.5rem auto 0 auto;
       font-size: 1.08rem;
-      color: #444;
+      color: var(--text);
       line-height: 1.8;
       text-align: left;
+      display: block;
     }
     code {
-      background: #f7f9fc;
+      background: #0066ff;
       border-radius: .5em;
       padding: 0 .4em;
       font-size: .97em;
     }
-    footer {
+    .footer {
+      padding: 2rem 0 1.2rem 0;
       text-align: center;
       color: #aaa;
       font-size: 1rem;
-      background: #fff;
-      border-top: 1px solid #e5e7eb;
+      background: var(--card-bg);
+      border-top: 1px solid var(--border);
       margin-top: 4rem;
-      padding: 2rem 0 1.2rem 0;
     }
     @media (max-width: 600px) {
       .main-container { padding: 0 .5rem 2rem .5rem; }
       .profile-flex { flex-direction: column; gap: 1.2rem; justify-content: center; align-items: center; }
       .profile-img { width: 120px; height: 120px; margin-left: 0; }
       .section-title { font-size: 1.4rem; }
-      .profile-bio { font-size: 1rem; margin-top: 1.2rem; }
+      .profile-bio { 
+        font-size: 1rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin-top: 1.2rem;
+      }
+      .profile-flex {
+        flex-direction: column;
+        gap: 1.2rem;
+        justify-content: center;
+        align-items: center;
+      }
+      .profile-img {
+        margin: 0 auto;
+        align-self: center;
+        width: 120px;
+        height: 120px;
+      }
+      .profile-table {
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+      }
+      .profile-table td {
+        text-align: left;
+        white-space: nowrap;
+      }
+    }
+
+    canvas {
+        display: block;
+        height: 55vh;
+        width: 78vw;
+        margin: 5vh auto 0 auto;
+        background: #f7f9fc;
+        box-shadow: 0 4px 24px rgba(30,64,175,.10);
+        border-radius: 1.2rem;
+        border: 1px solid var(--border);
+        max-width: 900px;
+    }
+    .background-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: -1;
+      pointer-events: none;
+      background: transparent;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      max-width: none;
     }
   </style>
-  <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
 </head>
-
 <body>
+  <canvas id="game" class="background-canvas"></canvas>
   <nav class="navbar">
     <div class="navbar-content">
       <a class="navbar-title" href="/">
-        <img src="https://res.cloudinary.com/laddge/image/upload/f_auto,q_auto/v1674993708/laddge.net/laddge.png" alt="laddge" />
-        Laddgeのページ
+        <img src="image/hashisato_icon.png" alt="hashisato" />
+        hashisato's portfolio
       </a>
     </div>
   </nav>
@@ -150,45 +241,196 @@
       </svg>
       Profile
     </h2>
-    <div class="profile-flex">
-      <img src="https://res.cloudinary.com/laddge/image/upload/f_auto,q_auto,c_scale,w_240,h_240/v1675575730/laddge.net/letsnote.jpg" alt="profile image" class="profile-img" loading="lazy">
-      <table class="profile-table">
+    <div class="profile-flex" style="gap: 1.2rem; align-items: center; justify-content: center;">
+      <img src="image/hashisato_icon.png" alt="Laddge's profile image" class="profile-img">
+      <table class="profile-table" style="margin: 0; display: block;">
         <tr>
           <td class="font-bold">Name</td>
-          <td>髙橋 朋希 (TAKAHASHI Tomoki)</td>
+          <td>はしさと (hashisato)</td>
         </tr>
         <tr>
           <td class="font-bold">Birthday</td>
-          <td>2004-06-28</td>
+          <td>2004-11-07</td>
         </tr>
         <tr>
           <td class="font-bold">Github</td>
-          <td><a href="https://github.com/laddge" target="_blank">laddge</a></td>
+          <td><a href="https://github.com/hashisato" target="_blank">hashisato</a></td>
         </tr>
         <tr>
           <td class="font-bold">Twitter</td>
-          <td><a href="https://twitter.com/laddge_" target="_blank">laddge_</a></td>
-        </tr>
-        <tr>
-          <td class="font-bold">Threads</td>
-          <td><a href="https://www.threads.net/@laddge_" target="_blank">laddge_</a></td>
-        </tr>
-        <tr>
-          <td class="font-bold">Instagram</td>
-          <td><a href="https://instagram.com/laddge_" target="_blank">laddge_</a></td>
+          <td><a href="https://twitter.com/hashisato_" target="_blank">hashisato_</a></td>
         </tr>
       </table>
     </div>
     <div class="profile-bio">
-      <p>長野県出身。中1 (13歳/2017年) から独学でプログラミングをやってます。</p>
-      <p>Linuxが大好きで、PythonやJavaScriptを書いたり、ウェブアプリを作ったりします。</p>
-      <p>ガンダムが好きです。</p>
-      <p>ちなみに、<code>Laddge</code>は、<code>ladder + bridge</code>の造語です。本名の姓から来ています。</p>
+      <p><code>hashisato</code>です。</p>
+      <p>大学からコンピュータの勉強を始めました。</p>
       <p>よろしくお願いします。</p>
     </div>
   </main>
-  <footer>
-    &copy; 2025 Laddge
+  <footer class="footer">
+    &copy; 2025 hashisato
   </footer>
+
+  <script>
+  console.clear();
+  
+  class Cell {
+    constructor(index, gridOptions = {}) {
+      const { cellSize, gridWidth } = gridOptions;
+      this.index = index;
+      this.isActive = Math.random() > 0.5;
+      this.x = (index % gridWidth) * cellSize;
+      this.y = Math.floor(index / gridWidth) * cellSize;
+    }
+  }
+
+  class GameOfLife {
+    constructor(canvasId) {
+      this.canvas = document.getElementById(canvasId);
+      this.context = this.canvas.getContext("2d");
+      
+      this.tickSpeed = 100;
+      this.cellSize = 10;
+      this.tick = null;
+      this.gridHeight = null;
+      this.gridWidth = null;
+      this.grid = null;
+      this.init();
+      windowResize().listen(() => this.init());
+    }
+
+    init() {
+      this.stop();
+      this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
+      this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
+      this.canvas.width = this.gridWidth * this.cellSize;
+      this.canvas.height = this.gridHeight * this.cellSize;
+      this.grid = this.generateGrid();
+      this.start();
+    }
+    
+    start() {
+      this.tick = setInterval(() => {
+        this.update();
+      }, this.tickSpeed);
+    }
+    
+    stop() {
+      clearInterval(this.tick);
+    }
+
+    update() {
+      this.grid = this.grid.map((cell) => ({
+        ...cell,
+        isActive: this.livesToFightAnotherDay(cell)
+      }));  
+      
+      this.redraw();
+    }
+
+    redraw() {
+      const { canvas, context, grid, cellSize } = this;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#00333d"; // セルの色
+       
+      grid.forEach((cell) => {
+        const { x, y, isActive } = cell;
+        if (isActive) {
+          context.beginPath();
+          context.rect(x, y, cellSize, cellSize);
+          context.fill();         
+        }
+      });
+    }
+    
+    getActiveNeighbors({ index }) {
+      const { grid, gridWidth } = this;
+      return [
+        grid[index - 1 - gridWidth],
+        grid[index - gridWidth],
+        grid[index + 1 - gridWidth],
+        grid[index - 1],
+        grid[index + 1],
+        grid[index - 1 + gridWidth],
+        grid[index + gridWidth],
+        grid[index + 1 + gridWidth]
+      ].filter((cell) => cell !== undefined && cell.isActive);
+    }
+
+    livesToFightAnotherDay(cell) {
+      const activeNeighbors = this.getActiveNeighbors(cell).length;
+      
+      if (activeNeighbors === 3) {
+        return true;
+      } else if (activeNeighbors === 2 && cell.isActive) {
+        return true;
+      }
+      return false;
+    }
+
+    generateGrid() {
+      const { cellSize, gridWidth, gridHeight } = this;
+      return Array(gridWidth * gridHeight)
+        .fill("x")
+        .map((_, i) => new Cell(i, { cellSize, gridWidth }));
+      }
+    }
+
+    const game = new GameOfLife("game");
+
+    function windowResize() {
+        const windowResize = {
+            callbacks: [],
+            running: false,
+
+            init() {
+                window.addEventListener("resize", windowResize.resize, {
+                    passive: true
+                });
+            },
+
+            runCallbacks() {
+                windowResize.callbacks.forEach((callback) => {
+                    callback();
+                });
+                windowResize.running = false;
+            },
+
+            resize() {
+                if (!windowResize.running) {
+                    windowResize.running = true;
+
+                    if (window.requestAnimationFrame) {
+                        window.requestAnimationFrame(() =>
+                            windowResize.runCallbacks()
+                        );
+                    } else {
+                        setTimeout(() => windowResize.runCallbacks(), 100);
+                    }
+                }
+            },
+
+            addCallback(callback) {
+                if (callback) {
+                    windowResize.callbacks.push(callback);
+                }
+            },
+
+            hasCallbacks() {
+                return windowResize.callbacks.length > 0;
+            }
+        };
+
+        return {
+            listen: (callback) => {
+                if (!windowResize.hasCallbacks()) {
+                    windowResize.init();
+                }
+                windowResize.addCallback(callback);
+            }
+        };
+    }
+    </script>
 </body>
 </html>
