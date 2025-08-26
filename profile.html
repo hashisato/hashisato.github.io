@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>hashisato's portfolio</title>
+  <meta name="description" content="大学生です。主に個人開発をしています。">
+  <meta property="og:title" content="hashisato's portfolio">
+  <meta property="og:description" content="大学生です。主に個人開発をしています。">
+  <link rel="icon" type="image/x-icon" href="image/favicon.ico">
+  <style>
+    :root {
+      --main-bg: #000000;   /* サイト全体の背景色 */
+      --card-bg: #fff;      /* カードの背景色 */
+      --primary: #1ebfff;   /* プライマリカラー */
+      --accent: #0008ff;    /* アクセントカラー */
+      --border: #e5e7eb;    /* ボーダーの色 */
+      --text: #222;         /* テキストの色 */
+      --muted: #666;        /* ミュートテキストの色 */
+      --radius: 1rem;
+      --shadow: 0 8px 24px rgba(30, 64, 175, .06);
+    }
+    body {
+      background: #f7f9fc;
+      color: #222;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      padding: 0;
+    }
+    main {
+      max-width: 480px;
+      margin: 6rem auto 2rem auto;
+      padding: 0 1rem;
+    }
+    h1 {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      color: #1ebfff;
+      text-align: center;
+    }
+    img.profile {
+      width: 7rem;
+      height: 7rem;
+      border-radius: 1rem;
+      object-fit: cover;
+      background: #eee;
+      display: block;
+      margin: 0 auto 1.5rem auto;
+    }
+    table {
+      margin: 0 auto 2rem auto;
+      font-size: 1rem;
+      text-align: left;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    td {
+      padding: .3rem .7rem;
+      vertical-align: top;
+    }
+    .font-bold {
+      font-weight: bold;
+      color: #1ebfff;
+      width: 7em;
+    }
+    .bio {
+      font-size: 1.08rem;
+      color: #444;
+      line-height: 1.8;
+      margin-top: 1.2rem;
+      text-align: left;
+    }
+    footer {
+      text-align: center;
+      color: #aaa;
+      font-size: 1rem;
+      margin: 2rem 0 1rem 0;
+    }
+    @media (max-width: 600px) {
+      main { max-width: 98vw; margin-top: 3.5rem; }
+      img.profile { width: 5rem; height: 5rem; }
+      h1 { font-size: 1.3rem; }
+      .bio { font-size: 1rem; }
+    }
+
+    canvas {
+        display: block;
+        height: 55vh;
+        width: 78vw;
+        margin: 5vh auto 0 auto;
+        background: #f7f9fc;
+        box-shadow: 0 4px 24px rgba(30,64,175,.10);
+        border-radius: 1.2rem;
+        border: 1px solid var(--border);
+        max-width: 900px;
+    }
+    .background-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: -1;
+      pointer-events: none;
+      background: transparent;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      max-width: none;
+    }
+  </style>
+  <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
+</head>
+
+<body>
+  <canvas id="game" class="background-canvas"></canvas>
+  <main>
+    <h1>Profile</h1>
+    <img src="image/hashisato.png" alt="profile image" class="profile">
+    <table>
+      <tr>
+        <td class="font-bold">Name</td>
+        <td>髙橋 朋希 (TAKAHASHI Tomoki)</td>
+      </tr>
+      <tr>
+        <td class="font-bold">Birthday</td>
+        <td>2004-06-28</td>
+      </tr>
+      <tr>
+        <td class="font-bold">Github</td>
+        <td><a href="https://github.com/laddge" target="_blank">laddge</a></td>
+      </tr>
+      <tr>
+        <td class="font-bold">Twitter</td>
+        <td><a href="https://twitter.com/laddge_" target="_blank">laddge_</a></td>
+      </tr>
+      <tr>
+        <td class="font-bold">Threads</td>
+        <td><a href="https://www.threads.net/@laddge_" target="_blank">laddge_</a></td>
+      </tr>
+      <tr>
+        <td class="font-bold">Instagram</td>
+        <td><a href="https://instagram.com/laddge_" target="_blank">laddge_</a></td>
+      </tr>
+    </table>
+    <div class="bio">
+      長野県出身。中1 (13歳/2017年) から独学でプログラミングをやってます。<br>
+      Linuxが大好きで、PythonやJavaScriptを書いたり、ウェブアプリを作ったりします。<br>
+      ガンダムが好きです。<br>
+      ちなみに、Laddgeは、ladder + bridgeの造語です。本名の姓から来ています。<br>
+      よろしくお願いします。
+    </div>
+  </main>
+  <footer class="footer">
+    © 2025 hashisato
+  </footer>
+
+  <script>
+  console.clear();
+  
+  class Cell {
+    constructor(index, gridOptions = {}) {
+      const { cellSize, gridWidth } = gridOptions;
+      this.index = index;
+      this.isActive = Math.random() > 0.5;
+      this.x = (index % gridWidth) * cellSize;
+      this.y = Math.floor(index / gridWidth) * cellSize;
+    }
+  }
+
+  class GameOfLife {
+    constructor(canvasId) {
+      this.canvas = document.getElementById(canvasId);
+      this.context = this.canvas.getContext("2d");
+      
+      this.tickSpeed = 100;
+      this.cellSize = 10;
+      this.tick = null;
+      this.gridHeight = null;
+      this.gridWidth = null;
+      this.grid = null;
+      this.init();
+      windowResize().listen(() => this.init());
+    }
+
+    init() {
+      this.stop();
+      this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
+      this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
+      this.canvas.width = this.gridWidth * this.cellSize;
+      this.canvas.height = this.gridHeight * this.cellSize;
+      this.grid = this.generateGrid();
+      this.start();
+    }
+    
+    start() {
+      this.tick = setInterval(() => {
+        this.update();
+      }, this.tickSpeed);
+    }
+    
+    stop() {
+      clearInterval(this.tick);
+    }
+
+    update() {
+      this.grid = this.grid.map((cell) => ({
+        ...cell,
+        isActive: this.livesToFightAnotherDay(cell)
+      }));  
+      
+      this.redraw();
+    }
+
+    redraw() {
+      const { canvas, context, grid, cellSize } = this;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#00333d"; // セルの色
+       
+      grid.forEach((cell) => {
+        const { x, y, isActive } = cell;
+        if (isActive) {
+          context.beginPath();
+          context.rect(x, y, cellSize, cellSize);
+          context.fill();         
+        }
+      });
+    }
+    
+    getActiveNeighbors({ index }) {
+      const { grid, gridWidth } = this;
+      return [
+        grid[index - 1 - gridWidth],
+        grid[index - gridWidth],
+        grid[index + 1 - gridWidth],
+        grid[index - 1],
+        grid[index + 1],
+        grid[index - 1 + gridWidth],
+        grid[index + gridWidth],
+        grid[index + 1 + gridWidth]
+      ].filter((cell) => cell !== undefined && cell.isActive);
+    }
+
+    livesToFightAnotherDay(cell) {
+      const activeNeighbors = this.getActiveNeighbors(cell).length;
+      
+      if (activeNeighbors === 3) {
+        return true;
+      } else if (activeNeighbors === 2 && cell.isActive) {
+        return true;
+      }
+      return false;
+    }
+
+    generateGrid() {
+      const { cellSize, gridWidth, gridHeight } = this;
+      return Array(gridWidth * gridHeight)
+        .fill("x")
+        .map((_, i) => new Cell(i, { cellSize, gridWidth }));
+      }
+    }
+
+    const game = new GameOfLife("game");
+
+    function windowResize() {
+        const windowResize = {
+            callbacks: [],
+            running: false,
+
+            init() {
+                window.addEventListener("resize", windowResize.resize, {
+                    passive: true
+                });
+            },
+
+            runCallbacks() {
+                windowResize.callbacks.forEach((callback) => {
+                    callback();
+                });
+                windowResize.running = false;
+            },
+
+            resize() {
+                if (!windowResize.running) {
+                    windowResize.running = true;
+
+                    if (window.requestAnimationFrame) {
+                        window.requestAnimationFrame(() =>
+                            windowResize.runCallbacks()
+                        );
+                    } else {
+                        setTimeout(() => windowResize.runCallbacks(), 100);
+                    }
+                }
+            },
+
+            addCallback(callback) {
+                if (callback) {
+                    windowResize.callbacks.push(callback);
+                }
+            },
+
+            hasCallbacks() {
+                return windowResize.callbacks.length > 0;
+            }
+        };
+
+        return {
+            listen: (callback) => {
+                if (!windowResize.hasCallbacks()) {
+                    windowResize.init();
+                }
+                windowResize.addCallback(callback);
+            }
+        };
+    }
+    function autoReloadGithubChart() {
+      const chartImg = document.querySelector('img[alt="hashisato\'s Github chart"]');
+      if (chartImg) {
+        // 日付パラメータを付与してキャッシュを回避
+        const baseUrl = "https://ghchart.rshah.org/0536e7/hashisato";
+        const today = new Date().toISOString().slice(0, 10);
+        chartImg.src = `${baseUrl}?d=${today}`;
+      }
+    }
+    // ページ表示時に実行
+    autoReloadGithubChart();
+    </script>
+</body>
+</html>
