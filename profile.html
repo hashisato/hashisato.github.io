@@ -9,325 +9,186 @@
   <meta property="og:description" content="大学生です。主に個人開発をしています。">
   <link rel="icon" type="image/x-icon" href="image/favicon.ico">
   <style>
-    :root {
-      --main-bg: #000000;   /* サイト全体の背景色 */
-      --card-bg: #fff;      /* カードの背景色 */
-      --primary: #1ebfff;   /* プライマリカラー */
-      --accent: #0008ff;    /* アクセントカラー */
-      --border: #e5e7eb;    /* ボーダーの色 */
-      --text: #222;         /* テキストの色 */
-      --muted: #666;        /* ミュートテキストの色 */
-      --radius: 1rem;
-      --shadow: 0 8px 24px rgba(30, 64, 175, .06);
-    }
     body {
-      background: #f7f9fc;
+      background: #fff;
       color: #222;
-      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-family: ui-sans-serif, system-ui, sans-serif;
       margin: 0;
       min-height: 100vh;
-      padding: 0;
     }
-    main {
-      max-width: 480px;
-      margin: 6rem auto 2rem auto;
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100vw;
+      z-index: 10;
+      background: rgba(255,255,255,0.7);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .navbar-content {
+      max-width: 1024px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      height: 4rem;
       padding: 0 1rem;
     }
-    h1 {
-      font-size: 2rem;
+    .navbar-title {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-size: 1.3rem;
       font-weight: bold;
-      margin-bottom: 2rem;
-      color: #1ebfff;
-      text-align: center;
+      color: #28a3cc;
+      text-decoration: none;
     }
-    img.profile {
-      width: 7rem;
-      height: 7rem;
-      border-radius: 1rem;
+    .navbar-title img {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
       object-fit: cover;
+      margin-right: 4.5rem;
+    }
+    .main-container {
+      max-width: 1024px;
+      margin: 6rem auto 0 auto;
+      padding: 0 1.5rem 3rem 1.5rem;
+    }
+    .section-title {
+      font-size: 2.25rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      margin-bottom: 2rem;
+      color: #28a3cc;
+      justify-content: center; /* ← 追加：中央寄せ */
+    }
+    .profile-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2.5rem;
+    }
+    .profile-img {
+      border-radius: 9999px;
+      width: 240px;
+      height: 240px;
+      object-fit: cover;
+      max-width: 50vw;
+      max-height: 50vw;
       background: #eee;
-      display: block;
-      margin: 0 auto 1.5rem auto;
+      align-self: flex-start;
+      margin-top: 0rem;
     }
-    table {
-      margin: 0 auto 2rem auto;
+    .profile-table {
       font-size: 1rem;
-      text-align: left;
+      text-align: center;
       width: 100%;
+      max-width: 350px;
       border-collapse: collapse;
+      margin: 0 auto;
     }
-    td {
+    .profile-table td {
       padding: .3rem .7rem;
       vertical-align: top;
     }
-    .font-bold {
+    .profile-table .font-bold {
       font-weight: bold;
-      color: #1ebfff;
+      color: #28a3cc;
       width: 7em;
     }
-    .bio {
+    .profile-bio {
+      max-width: 600px;
+      margin: 2.5rem auto 0 auto;
       font-size: 1.08rem;
       color: #444;
       line-height: 1.8;
-      margin-top: 1.2rem;
       text-align: left;
+    }
+    code {
+      background: #f7f9fc;
+      border-radius: .5em;
+      padding: 0 .4em;
+      font-size: .97em;
     }
     footer {
       text-align: center;
       color: #aaa;
       font-size: 1rem;
-      margin: 2rem 0 1rem 0;
+      background: #fff;
+      border-top: 1px solid #e5e7eb;
+      margin-top: 4rem;
+      padding: 2rem 0 1.2rem 0;
     }
     @media (max-width: 600px) {
-      main { max-width: 98vw; margin-top: 3.5rem; }
-      img.profile { width: 5rem; height: 5rem; }
-      h1 { font-size: 1.3rem; }
-      .bio { font-size: 1rem; }
-    }
-
-    canvas {
-        display: block;
-        height: 55vh;
-        width: 78vw;
-        margin: 5vh auto 0 auto;
-        background: #f7f9fc;
-        box-shadow: 0 4px 24px rgba(30,64,175,.10);
-        border-radius: 1.2rem;
-        border: 1px solid var(--border);
-        max-width: 900px;
-    }
-    .background-canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw !important;
-      height: 100vh !important;
-      z-index: -1;
-      pointer-events: none;
-      background: transparent;
-      margin: 0;
-      border-radius: 0;
-      box-shadow: none;
-      border: none;
-      max-width: none;
+      .main-container { padding: 0 .5rem 2rem .5rem; }
+      .profile-flex { flex-direction: column; gap: 1.2rem; justify-content: center; align-items: center; }
+      .profile-img { width: 120px; height: 120px; margin-left: 0; }
+      .section-title { font-size: 1.4rem; }
+      .profile-bio { font-size: 1rem; margin-top: 1.2rem; }
     }
   </style>
   <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
 </head>
 
 <body>
-  <canvas id="game" class="background-canvas"></canvas>
-  <main>
-    <h1>Profile</h1>
-    <img src="image/hashisato.png" alt="profile image" class="profile">
-    <table>
-      <tr>
-        <td class="font-bold">Name</td>
-        <td>髙橋 朋希 (TAKAHASHI Tomoki)</td>
-      </tr>
-      <tr>
-        <td class="font-bold">Birthday</td>
-        <td>2004-06-28</td>
-      </tr>
-      <tr>
-        <td class="font-bold">Github</td>
-        <td><a href="https://github.com/laddge" target="_blank">laddge</a></td>
-      </tr>
-      <tr>
-        <td class="font-bold">Twitter</td>
-        <td><a href="https://twitter.com/laddge_" target="_blank">laddge_</a></td>
-      </tr>
-      <tr>
-        <td class="font-bold">Threads</td>
-        <td><a href="https://www.threads.net/@laddge_" target="_blank">laddge_</a></td>
-      </tr>
-      <tr>
-        <td class="font-bold">Instagram</td>
-        <td><a href="https://instagram.com/laddge_" target="_blank">laddge_</a></td>
-      </tr>
-    </table>
-    <div class="bio">
-      長野県出身。中1 (13歳/2017年) から独学でプログラミングをやってます。<br>
-      Linuxが大好きで、PythonやJavaScriptを書いたり、ウェブアプリを作ったりします。<br>
-      ガンダムが好きです。<br>
-      ちなみに、Laddgeは、ladder + bridgeの造語です。本名の姓から来ています。<br>
-      よろしくお願いします。
+  <nav class="navbar">
+    <div class="navbar-content">
+      <a class="navbar-title" href="/">
+        <img src="https://res.cloudinary.com/laddge/image/upload/f_auto,q_auto/v1674993708/laddge.net/laddge.png" alt="laddge" />
+        Laddgeのページ
+      </a>
+    </div>
+  </nav>
+  <main class="main-container">
+    <h2 class="section-title">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="#28a3cc" width="32" height="32">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"/>
+      </svg>
+      Profile
+    </h2>
+    <div class="profile-flex">
+      <img src="https://res.cloudinary.com/laddge/image/upload/f_auto,q_auto,c_scale,w_240,h_240/v1675575730/laddge.net/letsnote.jpg" alt="profile image" class="profile-img" loading="lazy">
+      <table class="profile-table">
+        <tr>
+          <td class="font-bold">Name</td>
+          <td>髙橋 朋希 (TAKAHASHI Tomoki)</td>
+        </tr>
+        <tr>
+          <td class="font-bold">Birthday</td>
+          <td>2004-06-28</td>
+        </tr>
+        <tr>
+          <td class="font-bold">Github</td>
+          <td><a href="https://github.com/laddge" target="_blank">laddge</a></td>
+        </tr>
+        <tr>
+          <td class="font-bold">Twitter</td>
+          <td><a href="https://twitter.com/laddge_" target="_blank">laddge_</a></td>
+        </tr>
+        <tr>
+          <td class="font-bold">Threads</td>
+          <td><a href="https://www.threads.net/@laddge_" target="_blank">laddge_</a></td>
+        </tr>
+        <tr>
+          <td class="font-bold">Instagram</td>
+          <td><a href="https://instagram.com/laddge_" target="_blank">laddge_</a></td>
+        </tr>
+      </table>
+    </div>
+    <div class="profile-bio">
+      <p>長野県出身。中1 (13歳/2017年) から独学でプログラミングをやってます。</p>
+      <p>Linuxが大好きで、PythonやJavaScriptを書いたり、ウェブアプリを作ったりします。</p>
+      <p>ガンダムが好きです。</p>
+      <p>ちなみに、<code>Laddge</code>は、<code>ladder + bridge</code>の造語です。本名の姓から来ています。</p>
+      <p>よろしくお願いします。</p>
     </div>
   </main>
-  <footer class="footer">
-    © 2025 hashisato
+  <footer>
+    &copy; 2025 Laddge
   </footer>
-
-  <script>
-  console.clear();
-  
-  class Cell {
-    constructor(index, gridOptions = {}) {
-      const { cellSize, gridWidth } = gridOptions;
-      this.index = index;
-      this.isActive = Math.random() > 0.5;
-      this.x = (index % gridWidth) * cellSize;
-      this.y = Math.floor(index / gridWidth) * cellSize;
-    }
-  }
-
-  class GameOfLife {
-    constructor(canvasId) {
-      this.canvas = document.getElementById(canvasId);
-      this.context = this.canvas.getContext("2d");
-      
-      this.tickSpeed = 100;
-      this.cellSize = 10;
-      this.tick = null;
-      this.gridHeight = null;
-      this.gridWidth = null;
-      this.grid = null;
-      this.init();
-      windowResize().listen(() => this.init());
-    }
-
-    init() {
-      this.stop();
-      this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
-      this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
-      this.canvas.width = this.gridWidth * this.cellSize;
-      this.canvas.height = this.gridHeight * this.cellSize;
-      this.grid = this.generateGrid();
-      this.start();
-    }
-    
-    start() {
-      this.tick = setInterval(() => {
-        this.update();
-      }, this.tickSpeed);
-    }
-    
-    stop() {
-      clearInterval(this.tick);
-    }
-
-    update() {
-      this.grid = this.grid.map((cell) => ({
-        ...cell,
-        isActive: this.livesToFightAnotherDay(cell)
-      }));  
-      
-      this.redraw();
-    }
-
-    redraw() {
-      const { canvas, context, grid, cellSize } = this;
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.fillStyle = "#00333d"; // セルの色
-       
-      grid.forEach((cell) => {
-        const { x, y, isActive } = cell;
-        if (isActive) {
-          context.beginPath();
-          context.rect(x, y, cellSize, cellSize);
-          context.fill();         
-        }
-      });
-    }
-    
-    getActiveNeighbors({ index }) {
-      const { grid, gridWidth } = this;
-      return [
-        grid[index - 1 - gridWidth],
-        grid[index - gridWidth],
-        grid[index + 1 - gridWidth],
-        grid[index - 1],
-        grid[index + 1],
-        grid[index - 1 + gridWidth],
-        grid[index + gridWidth],
-        grid[index + 1 + gridWidth]
-      ].filter((cell) => cell !== undefined && cell.isActive);
-    }
-
-    livesToFightAnotherDay(cell) {
-      const activeNeighbors = this.getActiveNeighbors(cell).length;
-      
-      if (activeNeighbors === 3) {
-        return true;
-      } else if (activeNeighbors === 2 && cell.isActive) {
-        return true;
-      }
-      return false;
-    }
-
-    generateGrid() {
-      const { cellSize, gridWidth, gridHeight } = this;
-      return Array(gridWidth * gridHeight)
-        .fill("x")
-        .map((_, i) => new Cell(i, { cellSize, gridWidth }));
-      }
-    }
-
-    const game = new GameOfLife("game");
-
-    function windowResize() {
-        const windowResize = {
-            callbacks: [],
-            running: false,
-
-            init() {
-                window.addEventListener("resize", windowResize.resize, {
-                    passive: true
-                });
-            },
-
-            runCallbacks() {
-                windowResize.callbacks.forEach((callback) => {
-                    callback();
-                });
-                windowResize.running = false;
-            },
-
-            resize() {
-                if (!windowResize.running) {
-                    windowResize.running = true;
-
-                    if (window.requestAnimationFrame) {
-                        window.requestAnimationFrame(() =>
-                            windowResize.runCallbacks()
-                        );
-                    } else {
-                        setTimeout(() => windowResize.runCallbacks(), 100);
-                    }
-                }
-            },
-
-            addCallback(callback) {
-                if (callback) {
-                    windowResize.callbacks.push(callback);
-                }
-            },
-
-            hasCallbacks() {
-                return windowResize.callbacks.length > 0;
-            }
-        };
-
-        return {
-            listen: (callback) => {
-                if (!windowResize.hasCallbacks()) {
-                    windowResize.init();
-                }
-                windowResize.addCallback(callback);
-            }
-        };
-    }
-    function autoReloadGithubChart() {
-      const chartImg = document.querySelector('img[alt="hashisato\'s Github chart"]');
-      if (chartImg) {
-        // 日付パラメータを付与してキャッシュを回避
-        const baseUrl = "https://ghchart.rshah.org/0536e7/hashisato";
-        const today = new Date().toISOString().slice(0, 10);
-        chartImg.src = `${baseUrl}?d=${today}`;
-      }
-    }
-    // ページ表示時に実行
-    autoReloadGithubChart();
-    </script>
 </body>
 </html>
