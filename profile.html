@@ -40,7 +40,10 @@
       max-width: 1024px;
       margin: 6rem auto 0 auto;
       padding: 0 1.5rem 3rem 1.5rem;
-      /* スクロールバーがあっても余白でfooterが下に来る */
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* 中央揃え */
+      justify-content: flex-start;
     }
     .navbar {
       position: fixed;
@@ -97,8 +100,8 @@
     .profile-flex {
       display: flex;
       flex-wrap: wrap;
-      justify-content: center;
-      align-items: flex-start;
+      justify-content: center; /* 中央揃え */
+      align-items: center;     /* 垂直方向も中央揃え */
       gap: 2rem;
       margin-bottom: 2.5rem;
     }
@@ -110,11 +113,8 @@
       max-width: 50vw;
       max-height: 50vw;
       background: #eee;
-      align-self: flex-start;
-      margin-top: 0;
-      margin-right: 0.8rem;
+      align-self: center;
       display: block;
-      align-self: flex-start;
     }
     .profile-table {
       font-size: 1rem;
