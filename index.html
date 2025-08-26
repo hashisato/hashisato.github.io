@@ -90,6 +90,15 @@
       font-weight: bold;
       margin-bottom: .6em;
     }
+    .profile-name a {
+      color: var(--accent); /* 好きな色コードに変更（例：明るい青） */
+      transition: color 0.2s;
+      text-decoration: none;
+    }
+    .profile-name a:hover {
+      color: var(--primary); /* ホバー時の色（例：水色） */
+      text-decoration: underline;
+    }
     .profile-desc {
       font-size: 1.15rem;
       color: var(--muted);
@@ -300,7 +309,11 @@
   <section class="hero">
     <div class="profile-card">
       <img src="image/hashisato.png" alt="hashisato icon" class="profile-icon">
-      <div class="profile-name">hashisato</div>
+      <div class="profile-name">
+        <a href="profile.html">
+          hashisato
+        </a>
+      </div>
       <div class="profile-description">
         情報系学部の大学生です<br>
         サイバーセキュリティ、AI、Rustとか勉強してます<br>
@@ -369,114 +382,112 @@
   </div>
 
   <footer class="footer">
-    © 2025 hashisato
+    &copy; 2025 hashisato
   </footer>
 
   <script>
-    console.clear();
+  console.clear();
+  
+  class Cell {
+    constructor(index, gridOptions = {}) {
+      const { cellSize, gridWidth } = gridOptions;
+      this.index = index;
+      this.isActive = Math.random() > 0.5;
+      this.x = (index % gridWidth) * cellSize;
+      this.y = Math.floor(index / gridWidth) * cellSize;
+    }
+  }
 
-    class Cell {
-        constructor(index, gridOptions = {}) {
-            const { cellSize, gridWidth } = gridOptions;
-            this.index = index;
-            this.isActive = Math.random() > 0.5;
-            this.x = (index % gridWidth) * cellSize;
-            this.y = Math.floor(index / gridWidth) * cellSize;
-        }
+  class GameOfLife {
+    constructor(canvasId) {
+      this.canvas = document.getElementById(canvasId);
+      this.context = this.canvas.getContext("2d");
+      
+      this.tickSpeed = 100;
+      this.cellSize = 10;
+      this.tick = null;
+      this.gridHeight = null;
+      this.gridWidth = null;
+      this.grid = null;
+      this.init();
+      windowResize().listen(() => this.init());
     }
 
-    class GameOfLife {
-        constructor(canvasId) {
-            this.canvas = document.getElementById(canvasId);
-            this.context = this.canvas.getContext("2d");
+    init() {
+      this.stop();
+      this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
+      this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
+      this.canvas.width = this.gridWidth * this.cellSize;
+      this.canvas.height = this.gridHeight * this.cellSize;
+      this.grid = this.generateGrid();
+      this.start();
+    }
+    
+    start() {
+      this.tick = setInterval(() => {
+        this.update();
+      }, this.tickSpeed);
+    }
+    
+    stop() {
+      clearInterval(this.tick);
+    }
 
-            this.tickSpeed = 100;
-            this.cellSize = 10;
-            this.tick = null;
-            this.gridHeight = null;
-            this.gridWidth = null;
-            this.grid = null;
+    update() {
+      this.grid = this.grid.map((cell) => ({
+        ...cell,
+        isActive: this.livesToFightAnotherDay(cell)
+      }));  
+      
+      this.redraw();
+    }
 
-            this.init();
-            windowResize().listen(() => this.init());
+    redraw() {
+      const { canvas, context, grid, cellSize } = this;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "#00333d"; // セルの色
+       
+      grid.forEach((cell) => {
+        const { x, y, isActive } = cell;
+        if (isActive) {
+          context.beginPath();
+          context.rect(x, y, cellSize, cellSize);
+          context.fill();         
         }
+      });
+    }
+    
+    getActiveNeighbors({ index }) {
+      const { grid, gridWidth } = this;
+      return [
+        grid[index - 1 - gridWidth],
+        grid[index - gridWidth],
+        grid[index + 1 - gridWidth],
+        grid[index - 1],
+        grid[index + 1],
+        grid[index - 1 + gridWidth],
+        grid[index + gridWidth],
+        grid[index + 1 + gridWidth]
+      ].filter((cell) => cell !== undefined && cell.isActive);
+    }
 
-        init() {    
-            this.stop();
-            this.gridWidth = Math.floor(window.innerWidth / this.cellSize);
-            this.gridHeight = Math.floor(window.innerHeight / this.cellSize);
-            this.canvas.width = this.gridWidth * this.cellSize;
-            this.canvas.height = this.gridHeight * this.cellSize;
-            this.grid = this.generateGrid();
-            this.start();
-        }
+    livesToFightAnotherDay(cell) {
+      const activeNeighbors = this.getActiveNeighbors(cell).length;
+      
+      if (activeNeighbors === 3) {
+        return true;
+      } else if (activeNeighbors === 2 && cell.isActive) {
+        return true;
+      }
+      return false;
+    }
 
-        start() {
-            this.tick = setInterval(() => {
-                this.update();
-            }, this.tickSpeed);
-        }
-
-        stop() {
-            clearInterval(this.tick);
-        }
-
-        update() {
-            this.grid = this.grid.map((cell) => ({
-                ...cell,
-                isActive: this.livesToFightAnotherDay(cell)
-            }));
-
-            this.redraw();
-        }
-
-        redraw() {
-            const { canvas, context, grid, cellSize } = this;
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = "#00333d"; // セルの色
-
-            grid.forEach((cell) => {
-                const { x, y, isActive } = cell;
-                if (isActive) {
-                    context.beginPath();
-                    context.rect(x, y, cellSize, cellSize);
-                    context.fill();
-                }
-            });
-        }
-
-        getActiveNeighbors({ index }) {
-            const { grid, gridWidth } = this;
-            return [
-                grid[index - 1 - gridWidth],
-                grid[index - gridWidth],
-                grid[index + 1 - gridWidth],
-                grid[index - 1],
-                grid[index + 1],
-                grid[index - 1 + gridWidth],
-                grid[index + gridWidth],
-                grid[index + 1 + gridWidth]
-            ].filter((cell) => cell !== undefined && cell.isActive);
-        }
-
-        livesToFightAnotherDay(cell) {
-            const activeNeighbors = this.getActiveNeighbors(cell).length;
-
-            if (activeNeighbors === 3) {
-                return true;
-            } else if (activeNeighbors === 2 && cell.isActive) {
-                return true;
-            }
-
-            return false;
-        }
-
-        generateGrid() {
-            const { cellSize, gridWidth, gridHeight } = this;
-            return Array(gridWidth * gridHeight)
-                .fill("x")
-                .map((_, i) => new Cell(i, { cellSize, gridWidth }));
-        }
+    generateGrid() {
+      const { cellSize, gridWidth, gridHeight } = this;
+      return Array(gridWidth * gridHeight)
+        .fill("x")
+        .map((_, i) => new Cell(i, { cellSize, gridWidth }));
+      }
     }
 
     const game = new GameOfLife("game");
