@@ -553,17 +553,23 @@
             }
         };
     }
-    function autoReloadGithubChart() {
+    function autoReloadGithubContributors() {
       const chartImg = document.querySelector('img[alt="hashisato\'s Github chart"]');
+      const activityImg = document.querySelector('img[alt="GitHub Activity Graph"]');
       if (chartImg) {
         // 日付パラメータを付与してキャッシュを回避
         const baseUrl = "https://ghchart.rshah.org/0536e7/hashisato";
         const today = new Date().toISOString().slice(0, 10);
         chartImg.src = `${baseUrl}?d=${today}`;
       }
+      if (activityImg) {
+        const baseUrl = "https://github-readme-activity-graph.vercel.app/graph?username=hashisato&theme=tokyo-night&bg_color=ffffff&area=true";
+        const today = new Date().toISOString().slice(0, 10);
+        activityImg.src = `${baseUrl}&d=${today}`;
+      }
     }
-    // ページ表示時に実行
-    autoReloadGithubChart();
+    // 10分ごとに自動更新
+    setInterval(autoReloadGithubContributors, 10 * 60 * 1000);
     </script>
 </body>
 </html>
