@@ -337,26 +337,8 @@
     <div class="contribution">
       <span>GitHub Contributions</span>
       <div style="margin-top:.7rem;">
-      <!--
         <img src="https://ghchart.rshah.org/0536e7/hashisato" alt="hashisato's Github chart" style="width:100%;background:#f7f9fc;">
         <img src="https://github-readme-activity-graph.vercel.app/graph?username=hashisato&theme=tokyo-night&bg_color=ffffff&area=true" alt="GitHub Activity Graph" style="width:100%;background:#f7f9fc;">
-      -->
-        <img
-          src="https://ghchart.rshah.org/0536e7/hashisato"
-          alt="hashisato's Github chart"
-          class="contrib-img"
-          style="width:100%;background:#f7f9fc;object-fit:cover;"
-          decoding="async"
-          fetchpriority="high"
-          >
-        <img
-          src="https://github-readme-activity-graph.vercel.app/graph?username=hashisato&theme=tokyo-night&bg_color=ffffff&area=true"
-          alt="GitHub Activity Graph"
-          class="contrib-img"
-          style="width:100%;background:#f7f9fc;object-fit:cover;"
-          decoding="async"
-          fetchpriority="high"
-          >
       </div>
     </div>
 
@@ -602,21 +584,6 @@
     }
     // 10分ごとに自動更新
     setInterval(autoReloadGithubContributors, 10 * 60 * 1000);
-
-    // 表示を早く感じさせる：プレースホルダ→ロード完了でフェードイン
-    (function(){
-      const imgs = document.querySelectorAll('img.contrib-img');
-      imgs.forEach(img => {
-        // すでに読み込み済みなら即反映
-        if (img.complete && img.naturalWidth) {
-          img.classList.add('loaded');
-        } else {
-          img.addEventListener('load', () => img.classList.add('loaded'));
-          // エラー時は薄い背景で見栄えを保つ
-          img.addEventListener('error', () => img.style.opacity = '1');
-        }
-      });
-    })();
     </script>
 </body>
 </html>
