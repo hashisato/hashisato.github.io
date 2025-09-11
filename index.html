@@ -12,26 +12,27 @@
     <meta property="description" content="Hashisato's personal webpage, portfolio, and contact information.">
     <meta name="google-site-verification" content="l5jMueQRkk5FhkPXiOItyOmejl3wF6vC6cZcdRiX0-k" />
 </head>
-<body>
+<body style="font-family: 'Courier New', Courier, monospace;">
     <h1 style="text-align: center;">Hashisato's Web Page</h1>
     <hr style="margin: 30px auto; width: 40%; border: 1px solid">
     <h2 style="text-align: center;">About Me</h2>
-    <p style="text-align: center;">University student .</p>
+    <p style="text-align: center;">University student.</p>
     <div style="display: flex; flex-direction: column; align-items: center;">
         <div style="margin: 0 auto; width: max-content; min-width: 220px; max-width: 90%; text-align: center;">
-            <button onclick="toggleDetail(this)" style="background: none; border: none; color: blue; font-weight: bold; cursor: pointer; padding: 0; display: block; margin: 0 auto;">
+            <button onclick="toggleDetail(this)" style="background: none; border: none; color: blue; font-weight: bold; cursor: pointer; padding: 0; display: block; margin: 0 auto; font-family: 'Courier New', Courier, monospace;">
                 [ more ]
             </button>
             <div class="detail" style="display: none;">
                 <hr style="margin: 30px auto; width: 40%; border: 1px solid">
-                <div style="display: table; margin: 0 auto;">
+                <img src="https://hashisato.github.io/image/main_icon.webp" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%; display: block; margin: 0 auto;"><br>
+                <div style="display: table; margin: 0 auto; font-weight: bold;">
                     <div style="display: table-row;">
                         <span style="display: table-cell; padding-right: 10px; text-align: left;">Name:</span>
-                        <span style="display: table-cell; text-align: left;">Hashisato (はしさと)</span>
+                        <span style="display: table-cell; text-align: left;">Hashisato</span>
                     </div>
                     <div style="display: table-row;">
                         <span style="display: table-cell; padding-right: 10px; text-align: left;">Birthday:</span>
-                        <span style="display: table-cell; text-align: left;">2004 - 11 - 07</span>
+                        <span style="display: table-cell; text-align: left;">2004-11-07</span>
                     </div>
                     <div style="display: table-row;">
                         <span style="display: table-cell; padding-right: 10px; text-align: left;">Affiliation:</span>
@@ -87,27 +88,27 @@
     <div style="display: flex; flex-direction: column; align-items: center;">
         <ul style="list-style-type: square; padding-top: 0; margin: 0; width: max-content; min-width: 220px; max-width: 90%; text-align: left;">
             <li>
-                <strong>"ALDS I" Solutions by Rust</strong>&nbsp;&nbsp;
+                <strong>"ALDS I" Solutions by Rust</strong>&nbsp;
                 <a href="https://github.com/hashisato/alds1-rust" target="_blank" style="color: blue;">GitHub</a>
                 <br>
                 AOJ's Algorithm and Data Structures (ALDS1) solutions in Rust.
             </li><br>
             <li>
-                <strong>RSA encryption and decryption program</strong>&nbsp;&nbsp;
+                <strong>RSA encryption and decryption program</strong>&nbsp;
                 <a href="https://github.com/hashisato/rsa-cryption-rust" target="_blank" style="color: blue;">GitHub</a>
                 <br>
                 A program that implements RSA encryption and decryption in Rust.
             </li><br>
             <li>
-                <strong>"ITP I" Solutions by Rust</strong>&nbsp;&nbsp;
+                <strong>"ITP I" Solutions by Rust</strong>&nbsp;
                 <a href="https://github.com/hashisato/itp1-rust" target="_blank" style="color: blue;">GitHub</a>
                 <br>
                 AOJ's Introduction to Programming (ITP1) solutions in Rust.
             </li><br>
             <!--
             <li>
-                <strong>title</strong>&nbsp;&nbsp;
-                <a href="GitHub_link" target="_blank" style="color: blue;">GitHub</a>&nbsp;&nbsp;
+                <strong>title</strong>&nbsp;
+                <a href="GitHub_link" target="_blank" style="color: blue;">GitHub</a>&nbsp;
                 <a href="Zenn_Link" target="_blank" style="color: blue;">Zenn</a>
                 <br>
                 description
@@ -115,7 +116,37 @@
             -->
         </ul>
     </div>
+<!--
     <hr style="margin: 30px auto; width: 40%; border: 1px solid">
+    <h2 style="text-align: center;">Blog</h2>
+    <div style="display: flex; flex-direction: column; align-items: center;">
+        <ul style="list-style-type: square; padding-top: 0; margin: 0; width: max-content; min-width: 220px; max-width: 90%; text-align: left;">
+            <li>
+                <strong>My First Blog Post</strong>&nbsp;
+                <a href="https://hashisato.github.io/blog/my-first-post.html" target="_blank" style="color: blue;">Read More</a>
+                <br>
+                An introduction to my blog and what you can expect to find here.
+            </li><br>
+            <li>
+                <strong>Exploring Rust</strong>&nbsp;
+                <a href="https://hashisato.github.io/blog/exploring-rust.html" target="_blank" style="color: blue;">Read More</a>
+                <br>
+                A deep dive into the Rust programming language and its features.
+            </li><br>
+            <li>
+                <strong>Cybersecurity Best Practices</strong>&nbsp;
+                <a href="https://hashisato.github.io/blog/cybersecurity-best-practices.html" target="_blank" style="color: blue;">Read More</a>
+                <br>
+                Tips and tricks to stay safe online and protect your data.
+            </li><br>
+        </ul>
+    </div>
+    <hr style="margin: 30px auto; width: 40%; border: 1px solid">
+-->
+    <hr style="margin: 30px auto; border: 1px solid">
+    <footer style="text-align: center;">
+        <p>&copy; 2025 Hashisato. All rights reserved.</p>
+    </footer>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             document.querySelectorAll('.detail').forEach(function(div) {
@@ -132,9 +163,5 @@
             }
         }
     </script>
-    <hr style="margin: 30px auto; border: 1px solid">
-    <footer style="text-align: center;">
-        <p>&copy; 2025 Hashisato. All rights reserved.</p>
-    </footer>
 </body>
 </html>
