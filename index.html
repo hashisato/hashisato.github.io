@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8,
+        minimum-scale=0.8, maximum-scale=0.8, user-scalable=no">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>hashisato</title>
+</head>
+
+<body>
+    <main class="content">
+        <p>This page is the profile of hashisato.</p>
+        <section id="profile">
+            <h2>Profile</h2>
+            <div style="display: table;">
+                <div style="display: table-row;">
+                    <span style="display: table-cell; padding-right: 30px; white-space: nowrap; vertical-align:middle;">
+                        Picture :
+                    </span>
+                    <span style="display: table-cell; vertical-align:middle;">
+                        <img src="https://github.com/hashisato.png" alt="profile picture" style="width: 100px; height: 100px;">
+                    </span>
+                </div>
+                <div style="display: table-row;">
+                    <span style="display: table-cell; padding-right: 30px; white-space: nowrap;">
+                        Name :
+                    </span>
+                    <span style="display: table-cell;">
+                        hashisato
+                    </span>
+                </div>
+                <div style="display: table-row;">
+                    <span style="display: table-cell; padding-right: 30px; white-space: nowrap;">
+                        Affiliation :
+                    </span>
+                    <span style="display: table-cell;">
+                        Undergraduate Student (B4), School of Computer Science and Engineering
+                        Department of Computer Science and Engineering, SE-DE,
+                        <a href="https://u-aizu.ac.jp/" target="_blank">The University of Aizu</a>
+                    </span>
+                </div>
+                <div style="display: table-row;">
+                    <span style="display: table-cell; padding-right: 30px; white-space: nowrap;">
+                        GitHub :
+                    </span>
+                    <span style="display: table-cell;">
+                        <a href="https://github.com/hashisato" target="_blank">
+                            https://github.com/hashisato
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </section>
+        <section id="education">
+            <h2>Education</h2>
+            <p>2023 - Present : The University of Aizu, Fukushima, Japan</p>
+        </section>
+        <section id="blog">
+            <h2>Blog</h2>
+            <ul id="blog-list">
+                <li>Loading articles...</li>
+            </ul>
+        </section>
+        <br>
+        <p>Under construction......</p>
+    </main>
+    <footer>
+        <p>&copy; <span id="current-year">2026</span> hashisato.</p>
+    </footer>
+    <script>
+        async function loadBlogPosts() {
+            const listContainer = document.getElementById('blog-list');
+            const owner = 'hashisato';
+            const repo = 'hashisato.github.io';
+            const path = 'blog';
+            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
+            try {
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error('Failed to fetch articles');
+                const files = await response.json();
+                const htmlFiles = files.filter(file => file.name.endsWith('.html'));
+                if (htmlFiles.length === 0) {
+                    listContainer.innerHTML = '<li>No articles yet.</li>';
+                    return;
+                }
+                const postsPromises = htmlFiles.map(async (file) => {
+                    const match = file.name.match(/^(\d{4}-\d{2}-\d{2})/);
+                    const date = match ? match[1] : '2026-01-01';
+                    let title = file.name;
+                    try {
+                        const res = await fetch(`blog/${file.name}`);
+                        const htmlText = await res.text();
+                        const parser = new DOMParser();
+                        const doc = parser.parseFromString(htmlText, 'text/html');
+                        const h1Element = doc.querySelector('h1');
+                        if (h1Element) {
+                            title = h1Element.textContent.trim();
+                        }
+                    } catch (e) {
+                        console.error(`Could not load title for ${file.name}`, e);
+                    }
+                    return {
+                        date,
+                        filename: file.name,
+                        title
+                    };
+                });
+                const posts = await Promise.all(postsPromises);
+                posts.sort((a, b) => b.date.localeCompare(a.date));
+                listContainer.innerHTML = '';
+                posts.forEach(post => {
+                    const li = document.createElement('li');
+                    const a = document.createElement('a');
+                    a.href = `blog/${post.filename}`;
+                    a.textContent = `${post.date}：${post.title}`;
+
+                    li.appendChild(a);
+                    listContainer.appendChild(li);
+                });
+            } catch (error) {
+                console.error(error);
+                listContainer.innerHTML = '<li>Failed to load articles.</li>';
+            }
+        }
+        document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+
+</html>
