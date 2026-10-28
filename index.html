@@ -20,7 +20,7 @@
                         Picture :
                     </span>
                     <span style="display: table-cell; vertical-align:middle;">
-                        <img src="https://github.com/hashisato.png" alt="profile picture" style="width: 100px; height: 100px;">
+                        <img src="img/profile_picture.jpg" alt="profile picture" style="width: 100px; height: 100px;">
                     </span>
                 </div>
                 <div style="display: table-row;">
@@ -72,42 +72,15 @@
     <script>
         async function loadBlogPosts() {
             const listContainer = document.getElementById('blog-list');
-            const owner = 'hashisato';
-            const repo = 'hashisato.github.io';
-            const path = 'blog';
-            const apiUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
             try {
-                const response = await fetch(apiUrl);
-                if (!response.ok) throw new Error('Failed to fetch articles');
-                const files = await response.json();
-                const htmlFiles = files.filter(file => file.name.endsWith('.html'));
-                if (htmlFiles.length === 0) {
+                const response = await fetch('blog/posts.json');
+                if (!response.ok) throw new Error('Failed to load posts.json');
+                const posts = await response.json();
+                console.log(posts);
+                if (posts.length === 0) {
                     listContainer.innerHTML = '<li>No articles yet.</li>';
                     return;
                 }
-                const postsPromises = htmlFiles.map(async (file) => {
-                    const match = file.name.match(/^(\d{4}-\d{2}-\d{2})/);
-                    const date = match ? match[1] : '2026-01-01';
-                    let title = file.name;
-                    try {
-                        const res = await fetch(`blog/${file.name}`);
-                        const htmlText = await res.text();
-                        const parser = new DOMParser();
-                        const doc = parser.parseFromString(htmlText, 'text/html');
-                        const h1Element = doc.querySelector('h1');
-                        if (h1Element) {
-                            title = h1Element.textContent.trim();
-                        }
-                    } catch (e) {
-                        console.error(`Could not load title for ${file.name}`, e);
-                    }
-                    return {
-                        date,
-                        filename: file.name,
-                        title
-                    };
-                });
-                const posts = await Promise.all(postsPromises);
                 posts.sort((a, b) => b.date.localeCompare(a.date));
                 listContainer.innerHTML = '';
                 posts.forEach(post => {
