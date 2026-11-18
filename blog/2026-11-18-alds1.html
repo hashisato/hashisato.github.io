@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8,
+        minimum-scale=0.8, maximum-scale=0.8, user-scalable=no">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>hashisato</title>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="../">&larr; Back to Home</a>
+        </nav>
+    </header>
+    <main class="content">
+        <h1>AOJ ALDS1(01〜06)をRustで実装してみた</h1>
+        <p>Published : 2026-11-18</p>
+        <hr>
+        <article>
+            <section>
+                <h2>はじめに</h2>
+                <p>
+                    この記事は <a href="https://onlinejudge.u-aizu.ac.jp/home" target="_blank" rel="noopener">AOJ (Aizu
+                        Online Judge)</a> の
+                    <a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1" target="_blank"
+                        rel="noopener">ALDS1 (Algorithms and Data Structures I)</a>
+                    をRustで実装したものの解説記事です。
+                </p>
+                <p>
+                    GitHubの <a href="https://github.com/xilrv/alds1-rust" target="_blank" rel="noopener">alds1-rust</a>
+                    リポジトリに、各問題ごとのRustによる実装例を掲載しています。<br>
+                    詳細は <a href="https://github.com/xilrv/alds1-rust/blob/main/README.md" target="_blank"
+                        rel="noopener">README.md</a> をご覧ください。
+                </p>
+                <p><a href="https://github.com/xilrv/alds1-rust" target="_blank"
+                        rel="noopener">https://github.com/xilrv/alds1-rust</a></p>
+            </section>
+
+            <section>
+                <h2>問題の解説</h2>
+                <div class="notice">
+                    この記事、及び上記のリポジトリではALDS1-01〜ALDS1-06のみを扱っています。多くの問題では、主要な関数の機能のみを解説しています。全体の実装につきましてはGitHubリポジトリをご覧ください。内容に誤りがある場合があります。ご了承ください。
+                </div>
+
+                <!-- ALDS1-01 -->
+                <section>
+                    <h3>ALDS1-01</h3>
+
+                    <section id="alds1-01-a">
+                        <h4>A. 挿入ソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-01/alds1_01_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_01_A.rs</a></p>
+                        <p>以下のsort関数は要素を1つ取り出し、その要素を正しい位置に挿入するソートの過程を出力しています。</p>
+
+                        <details>
+                            <summary>挿入ソートとは</summary>
+                            <p>挿入ソートは、要素を1つずつ取り出して、すでにソートされた部分の適切な位置に挿入してソートするアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Insertion-sort-example-300px.gif"
+                                    alt="Insertion Sort Animation" /></p>
+                            <p>出典: <a href="https://ja.wikipedia.org/wiki/%E6%8C%BF%E5%85%A5%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia 挿入ソート</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">/* num: 要素の数, data: 入力された数列 */
+fn sort(num: usize, mut data: Vec&lt;u64&gt;) {
+    let mut v: u64 = 0;
+    let mut j: usize = 0;
+    for i in 1..num {
+        v = data[i]; // 要素を1つ取り出す
+        j = i;
+        while j&gt;0 &amp;&amp; data[j-1]&gt;v {  // jが正の整数かつdata[j-1]がvより大きい場合
+            data[j] = data[j-1];    // data[j-1]の要素をdata[j]にずらす
+            j = j-1;
+        }
+        data[j] = v; // vを正しい位置に挿入
+        for i in 0..num {
+            print!("{}", data[i]); // ベクタの要素を出力
+            if i != num-1 {
+                print!(" ");
+            }
+        }
+        println!("");
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-01-b">
+                        <h4>B. 最大公約数</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-01/alds1_01_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_01_B.rs</a></p>
+                        <p>以下のgcd関数はユークリッドの互除法を用いてxとyの最大公約数を効率的に求めています。</p>
+
+                        <pre><code class="language-rust">/* x: 入力された整数, y: 入力された整数 */
+fn gcd(mut x: u64, mut y: u64) {
+    if x&lt;y { // x &gt; y になるようにする
+        let buf = x;
+        x = y;
+        y = buf;
+    }
+    while y&gt;0 {         // ユークリッドの互除法を用いる
+        let r = x%y;    // rにxをyで割ったときの余りを代入
+        x = y;          // xにyを代入
+        y = r;          // yにrを代入（yが0になるまでループ）
+    }
+    println!("{}",x);   // 最大公約数を出力
+}</code></pre>
+                        <p>参考資料：<a
+                                href="https://ja.wikipedia.org/wiki/%E3%83%A6%E3%83%BC%E3%82%AF%E3%83%AA%E3%83%83%E3%83%89%E3%81%AE%E4%BA%92%E9%99%A4%E6%B3%95"
+                                target="_blank" rel="noopener">ユークリッドの互除法 - Wikipedia</a></p>
+                    </section>
+
+                    <section id="alds1-01-c">
+                        <h4>C. 素数</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-01/alds1_01_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_01_C.rs</a></p>
+                        <p>以下のisPrime関数は試し割り法を用いてxが素数かどうかを判定します。</p>
+
+                        <details>
+                            <summary>試し割り法とは</summary>
+                            <p>試し割り法は、ある数が素数かどうかを判定するために、その数の平方根までの整数で割り切れるかどうかを調べるアルゴリズムです。</p>
+                            <ul>
+                                <li>例: 103 の場合 (103 = a × b (a ≤ b)とします。)</li>
+                                <li>a = 11のとき、b = 9.36...となり、a ≤
+                                    bの条件を満たさなくなります。つまり、aが平方根より大きい場合、bは平方根より小さくなるため、すでに調べた数の中に含まれていることになります。</li>
+                                <li>よって、&#8730;103 ≒ 10.14 なので、2、3、...、10 までを調べれば十分です。</li>
+                            </ul>
+                        </details>
+
+                        <pre><code class="language-rust">/* x: 入力された整数 */
+fn isPrime(x: u64) -&gt; bool {
+    if x==2 { // xが2の場合が素数なのでtrueを返す
+        return true;
+    }
+    else if x&lt;2 || x%2==0 { // xが2未満、2の倍数の場合はfalseを返す
+        return false;
+    }
+    let limit: u64 = (x as f64).sqrt() as u64 + 1; // limitを(xの平方根)+1とする
+    let mut i = 3;
+    while i&lt;=limit {
+        if x%i==0 { // xがiで割り切れた場合はfalseを返す
+            return false;
+        }
+        i += 2; // 偶数の場合は考慮しないので2ずつ加算する
+    }
+    true // 上記以外の場合は素数なのでtrueを返す
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-01-d">
+                        <h4>D. 最大の利益</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/1/ALDS1_1_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-01/alds1_01_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_01_D.rs</a></p>
+                        <p>以下のmax_prof関数はこれまでに出現した最小値(最安値)を記録しながら、各時点で「現在値 - 最安値」の差(利益)が最大になるように更新していきます。</p>
+
+                        <pre><code class="language-rust">/* data: 時刻tにおける価格, num: 要素の数 */
+fn max_prof(data: Vec&lt;u64&gt;, num: usize) -&gt; i64 {
+    let mut minv: i64 = data[0] as i64;             // 最小値
+    let mut maxv: i64 = (data[1]-data[0]) as i64;   // 最大利益
+    for i in 1..num {
+        let j: i64 = data[i] as i64;    // 要素を1つ取り出す
+        if maxv&lt;j-minv {              // j-minvが最大利益より大きい場合
+            maxv = j-minv;              // j-minvをmaxvに代入し最大利益を更新
+        }
+        if j&lt;minv {                   // jがminvより小さい場合
+            minv = j;                   // jをminvに代入し最小値を更新
+        }
+    }
+    maxv // maxv(最大利益)を返す
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- ALDS1-02 -->
+                <section>
+                    <h3>ALDS1-02</h3>
+
+                    <section id="alds1-02-a">
+                        <h4>A. バブルソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/2/ALDS1_2_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-02/alds1_02_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_02_A.rs</a></p>
+                        <p>以下のbubbleSort関数はバブルソートアルゴリズムを用いて、dataを昇順にソートします。</p>
+
+                        <details>
+                            <summary>バブルソートとは</summary>
+                            <p>バブルソートは、隣り合う要素の大小比較と並べ替えを繰り返して、全体をソートするアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Bubble-sort-example-300px.gif"
+                                    alt="Bubble Sort Animation" /></p>
+                            <p>出典：<a href="https://ja.wikipedia.org/wiki/%E3%83%90%E3%83%96%E3%83%AB%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia バブルソート</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">/* num: 要素の数, data: 入力された数列 */
+fn bubbleSort(num: usize, mut data: Vec&lt;u64&gt;) {
+    let mut flag: bool = true;
+    let mut count: usize = 0;
+    while flag {
+        flag = false;
+        for i in (1..num).rev() {
+            if data[i]&lt;data[i-1] {      // data[i]がdata[i-1]より小さい場合
+                let tmp: u64 = data[i]; // 一時的にdata[i]をtmpに保存
+                data[i] = data[i-1];    // data[i-1]をdata[i]に移動
+                data[i-1] = tmp;        // tmpの値をdata[i-1]に移動
+                flag = true;
+                count += 1;             // 交換回数をカウント
+            }
+        }
+    }
+    print(data);
+    println!("\n{}",count);
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-02-b">
+                        <h4>B. 選択ソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/2/ALDS1_2_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-02/alds1_02_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_02_B.rs</a></p>
+                        <p>以下のselectionSort関数は選択ソートアルゴリズムを用いて、dataを昇順にソートします。</p>
+
+                        <details>
+                            <summary>選択ソートとは</summary>
+                            <p>数列の中から最小（または最大）の要素を選択し、先頭の要素と交換する操作を繰り返してソートするアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/9/94/Selection-Sort-Animation.gif"
+                                    alt="Selection Sort Animation" /></p>
+                            <p>出典: <a href="https://ja.wikipedia.org/wiki/%E9%81%B8%E6%8A%9E%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia 選択ソート</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">/* num: 要素の数, data: 入力された数列 */
+fn selectionSort(num: usize, mut data: Vec&lt;u64&gt;) {
+    let mut count: usize = 0;
+    for i in 0..num {
+        let mut minj: usize = i;
+        for j in i..num {
+            if data[j]&lt;data[minj] {
+                minj = j;
+            }
+        }
+        if i!=minj {
+            let tmp: u64 = data[i];
+            data[i] = data[minj];
+            data[minj] = tmp;
+            count += 1;
+        }
+    }
+    print(data);
+    println!("\n{}",count);
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-02-c">
+                        <h4>C. 安定なソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/2/ALDS1_2_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-02/alds1_02_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_02_C.rs</a></p>
+                        <p>以下の関数はバブルソートと選択ソートを用いてdataを数字の昇順にソートします。※同じ数字が複数ある場合は入力された順番を保ちます。</p>
+
+                        <details>
+                            <summary>data(入力されたカードの情報)の型について</summary>
+                            <ul>
+                                <li>dataはタプルの<code>Vec&lt;(char, u64)&gt;</code>で、各タプルは(絵柄, 数字)の形式を持ちます。</li>
+                                <li>絵柄は<code>char</code>型、数字は<code>u64</code>型です。</li>
+                            </ul>
+                        </details>
+
+                        <h5>バブルソート</h5>
+                        <div class="notice">詳しくは <a href="#alds1-02-a">ALDS1-02 A. バブルソート</a> を参照してください。</div>
+                        <pre><code class="language-rust">fn bubbleSort(num: usize, v: &amp;mut Vec&lt;(char, u64)&gt;) -&gt; Vec&lt;(char, u64)&gt; {
+    let mut flag: bool = true;
+    while flag {
+        flag = false;
+        for i in (1..num).rev() {
+            if v[i].1 &lt; v[i-1].1 {
+                let tmp: (char, u64) = v[i];
+                v[i] = v[i-1];
+                v[i-1] = tmp;
+                flag = true;
+            }
+        }
+    }
+    v.to_vec()
+}</code></pre>
+
+                        <h5>選択ソート</h5>
+                        <div class="notice">詳しくは <a href="#alds1-02-b">ALDS1-02 B. 選択ソート</a> を参照してください。</div>
+                        <pre><code class="language-rust">fn selectionSort(num: usize, v: &amp;mut Vec&lt;(char, u64)&gt;) -&gt; Vec&lt;(char, u64)&gt; {
+    for i in 0..num {
+        let mut minj: usize = i;
+        for j in i..num {
+            if v[j].1&lt;v[minj].1 {
+                minj = j;
+            }
+        }
+        if i!=minj {
+            let tmp: (char, u64) = v[i];
+            v[i] = v[minj];
+            v[minj] = tmp;
+        }
+    }
+    v.to_vec()
+}</code></pre>
+
+                        <h5>安定性の判定</h5>
+                        <pre><code class="language-rust">fn is_stable(correct: &amp;Vec&lt;(char, u64)&gt;, vec: Vec&lt;(char, u64)&gt;) {
+    print(&amp;vec);
+    for i in 0..correct.len() {
+        if correct[i].0!=vec[i].0 || correct[i].1!=vec[i].1 {
+            println!("Not stable");
+            return;
+        }
+    }
+    println!("Stable");
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-02-d">
+                        <h4>D. シェルソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/2/ALDS1_2_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-02/alds1_02_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_02_D.rs</a></p>
+
+                        <details>
+                            <summary>シェルソートとは</summary>
+                            <p>シェルソートは、データの間隔を空けて部分的な挿入ソートを行い、最終的に間隔を1にして完全にソートするアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/6/61/Sorting_shellsort_anim2.gif"
+                                    alt="Shell Sort Animation" /></p>
+                            <p>出典: <a
+                                    href="https://ja.wikipedia.org/wiki/%E3%82%B7%E3%82%A7%E3%83%AB%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia シェルソート</a></p>
+                        </details>
+
+                        <h5>シェルソート</h5>
+                        <pre><code class="language-rust">fn shellSort(num: usize, A: &amp;mut Vec&lt;u64&gt;) {
+    let mut count = 0;
+    let G = generate_g(num);
+    for &amp;i in &amp;G {
+        count += insertionSort(num, A, i as usize);
+    }
+    println!("{}",G.len());
+    print(&amp;G);
+    println!("{}",count);
+}</code></pre>
+
+                        <h5>ギャップの生成</h5>
+                        <pre><code class="language-rust">fn generate_g(num: usize) -&gt; Vec&lt;u64&gt; {
+    let mut g: Vec&lt;u64&gt; = Vec::new();
+    let mut element: u64 = 1;
+    while element&lt;=num as u64 {
+        g.push(element);
+        element = element*3+1;
+    }
+    g.reverse();
+    g
+}</code></pre>
+
+                        <h5>挿入ソート</h5>
+                        <div class="notice">詳しくは <a href="#alds1-01-a">ALDS1-01 A. 挿入ソート</a>
+                            を参照してください。<br>
+                            (今回はギャップを考慮した挿入ソートを実装しています。)</div>
+                        <pre><code class="language-rust">fn insertionSort(num: usize, A: &amp;mut Vec&lt;u64&gt;, g: usize) -&gt; usize {
+    let mut count = 0;
+    for i in g..A.len() {
+        let v = A[i];
+        let mut j = i;
+        while j&gt;=g &amp;&amp; A[j-g]&gt;v {
+            A[j]=A[j-g];
+            j -= g;
+            count += 1;
+        }
+        A[j] = v;
+    }
+    count
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- ALDS1-03 -->
+                <section>
+                    <h3>ALDS1-03</h3>
+
+                    <section id="alds1-03-a">
+                        <h4>A. スタック</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-03/alds1_03_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_03_A.rs</a></p>
+                        <p>以下のmain関数は標準入力から逆ポーランド記法で表された数式を読み込みます。</p>
+
+                        <details>
+                            <summary>後入れ先出し(LIFO)とは</summary>
+                            <p>最後に追加されたデータが最初に取り出される特性を持っています。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Lifo_stack.svg"
+                                    alt="LIFO Stack" /></p>
+                            <p>出典: <a href="https://ja.wikipedia.org/wiki/%E3%82%B9%E3%82%BF%E3%83%83%E3%82%AF"
+                                    target="_blank" rel="noopener">Wikipedia スタック</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">use std::io::{self, BufRead};
+
+fn main() {
+    let stdin = io::stdin();
+    let mut lines = stdin.lock().lines();
+    let mut input = lines.next().unwrap().unwrap();
+    let mut stack: Vec&lt;i64&gt; = Vec::new();
+    for symbol in input.split_whitespace() {
+        match symbol {
+            "+" =&gt; {
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a+b);
+            }
+            "-" =&gt; {
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a-b);
+            }
+            "*" =&gt; {
+                let b = stack.pop().unwrap();
+                let a = stack.pop().unwrap();
+                stack.push(a*b);
+            }
+            num =&gt; {
+                let n = num.parse::&lt;i64&gt;().unwrap();
+                stack.push(n);
+            }
+        }
+    }
+    let result = stack.pop().unwrap();
+    println!("{}", result);
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-03-b">
+                        <h4>B. キュー</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-03/alds1_03_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_03_B.rs</a></p>
+                        <p>以下のmain関数は標準入力からプロセスの情報を読み込み、キューを使用してラウンドロビンスケジューリングを実行します。</p>
+
+                        <details>
+                            <summary>先入れ先出し(FIFO)とは</summary>
+                            <p>最初に追加されたデータが最初に取り出される特性を持っています。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/5/52/Data_Queue.svg"
+                                    alt="FIFO Queue" /></p>
+                            <p>出典: <a
+                                    href="https://ja.wikipedia.org/wiki/%E3%82%AD%E3%83%A5%E3%83%BC_(%E3%82%B3%E3%83%B3%E3%83%94%E3%83%A5%E3%83%BC%E3%82%BF)"
+                                    target="_blank" rel="noopener">Wikipedia キュー</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn main() {
+    let (q, mut queue) = input();
+    let mut total: i64 = 0;
+    while let Some(mut process)=queue.pop_front() {
+        if process.1&gt;q {
+            process.1 -= q;
+            total += q;
+            queue.push_back(process);
+        } else {
+            total += process.1;
+            println!("{} {}", process.0, total);
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-03-c">
+                        <h4>C. 双方向連結リスト</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-03/alds1_03_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_03_C.rs</a></p>
+                        <p>以下のdll関数は標準入力からコマンドを読み込み、双方向連結リストを操作します。</p>
+
+                        <pre><code class="language-rust">fn dll() -&gt; VecDeque&lt;i64&gt; {
+    let mut word = String::new();
+    std::io::stdin().read_line(&amp;mut word).unwrap();
+    let n: usize = word.trim().parse().unwrap();
+    let stdin = io::stdin();
+    let mut lines = stdin.lock().lines();
+    let mut list: VecDeque&lt;i64&gt; = VecDeque::new();
+    for i in 0..n {
+        let line = lines.next().unwrap().unwrap().trim().to_string();
+        let words = line.split_whitespace().collect::&lt;Vec&lt;&amp;str&gt;&gt;();
+        match words[0] {
+            "deleteFirst" =&gt; { list.pop_back(); },
+            "deleteLast" =&gt; { list.pop_front(); },
+            "insert" =&gt; {
+                let cmd: i64 = i64::from_str(words[1]).unwrap();
+                list.push_back(cmd);
+            },
+            "delete" =&gt; {
+                let cmd: i64 = i64::from_str(words[1]).unwrap();
+                if let Some(remove_index) = list.iter().rposition(|x| *x == cmd) {
+                    list.remove(remove_index);
+                }
+            },
+            _ =&gt; {}
+        }
+    }
+    list
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-03-d">
+                        <h4>D. Areas on the Cross-Section Diagram</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/3/ALDS1_3_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-03/alds1_03_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_03_D.rs</a></p>
+                        <p>以下のcalc関数はスタックを用いて、入力された模式断面図の各谷間の面積を計算します。</p>
+
+                        <pre><code class="language-rust">fn calc(stack: &amp;mut Vec&lt;(char, u64)&gt;) {
+    let mut count = 0;
+    let mut process = 0;
+    let mut min = 0;
+    for i in 0..stack.len() {
+        count = 0;
+        if stack[i].0=='/' {
+            for j in (0..i).rev() {
+                if stack[j].0=='\\' {
+                    count += 1;
+                    process = j;
+                    stack[i].0 = '_';
+                    stack[j].0 = '_';
+                    stack[j].1 = count;
+                    if process&lt;min {
+                        for i in process+1..=min {
+                            stack[process].1 += stack[i].1; 
+                            stack[i].1 = 0;
+                        }
+                    }
+                    min = process;
+                    break;
+                }
+                else if stack[j].0=='_' {
+                    count += 1;
+                }
+            }
+        }        
+    }
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- ALDS1-04 -->
+                <section>
+                    <h3>ALDS1-04</h3>
+
+                    <section id="alds1-04-a">
+                        <h4>A. 線形探索</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-04/alds1_04_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_04_A.rs</a></p>
+                        <p>以下の関数は与えられた数列から指定された値を線形探索で検索します。</p>
+
+                        <pre><code class="language-rust">fn main() {
+    let (n, mut S) = input();
+    let (q, mut T) = input();
+    let mut count = 0;
+    S.push(0);
+    for i in T {
+        count += search(n, &amp;mut S, i);
+    }
+    println!("{}",count);
+}
+
+fn search(num: usize, vec: &amp;mut Vec&lt;u64&gt;, key: u64) -&gt; u64 {
+    let mut i: usize = 0;
+    vec[num] = key;
+    while vec[i]!=key {
+        i += 1;
+        if i==num { return 0; }
+    }
+    1
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-04-b">
+                        <h4>B. 二分探索</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-04/alds1_04_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_04_B.rs</a></p>
+
+                        <details>
+                            <summary>二分探索とは</summary>
+                            <p>ソートされたデータ構造に対して効率的に要素を検索する手法です。</p>
+                            <p>参考資料: <a href="https://ja.wikipedia.org/wiki/%E4%BA%8C%E5%88%86%E6%8E%A2%E7%B4%A2"
+                                    target="_blank" rel="noopener">Wikipedia 二分探索</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn binarysearch(num: usize, vec: &amp;mut Vec&lt;u64&gt;, key: u64) -&gt; u64 {
+    let mut right: usize = num;
+    let mut left: usize = 0;
+    while left&lt;right {
+        let mid: usize = (right+left)/2;
+        if vec[mid]==key {
+            return 1;
+        }
+        else if key&lt;vec[mid] {
+            right = mid;
+        }
+        else {
+            left = mid+1;
+        }
+    }
+    0
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-04-c">
+                        <h4>C. 辞書</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-04/alds1_04_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_04_C.rs</a></p>
+
+                        <details>
+                            <summary>HashSet型とは</summary>
+                            <p>重複しない要素の集合を表現するデータ構造です。内部でハッシュテーブルを使用しています。</p>
+                        </details>
+
+                        <pre><code class="language-rust">fn dictionary() {
+    let mut word = String::new();
+    std::io::stdin().read_line(&amp;mut word).unwrap();
+    let n: usize = word.trim().parse().unwrap();
+    let stdin = io::stdin();
+    let mut lines = stdin.lock().lines();
+    let mut set: HashSet&lt;String&gt; = HashSet::new();
+    for i in 0..n {
+        let line = lines.next().unwrap().unwrap().trim().to_string(); 
+        let words = line.split_whitespace().collect::&lt;Vec&lt;&amp;str&gt;&gt;(); 
+        match words[0] {
+            "insert" =&gt; { set.insert(words[1].to_string()); },
+            "find" =&gt; {
+                if set.contains(&amp;words[1].to_string()) {
+                    println!("yes");
+                } else {
+                    println!("no");
+                }
+            },
+            _ =&gt; {}
+        }
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-04-d">
+                        <h4>D. 割り当て</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/4/ALDS1_4_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-04/alds1_04_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_04_D.rs</a></p>
+
+                        <pre><code class="language-rust">fn allocation(n: usize, k: usize, w: &amp;mut Vec&lt;usize&gt;) -&gt; usize {
+    let mut left = *w.iter().max().unwrap();
+    let mut right = w.iter().sum::&lt;usize&gt;();
+    let mut mid = 0;
+    
+    while left &lt; right {
+        mid = (left + right) / 2;
+        if canLoad(n, k, w, mid) {
+            right = mid;
+        } else {
+            left = mid + 1;
+        }
+    }
+    left
+}
+
+fn canLoad(n: usize, k: usize, w: &amp;Vec&lt;usize&gt;, capacity: usize) -&gt; bool {
+    let mut trucks_used = 1;
+    let mut current_weight = 0;
+    for i in 0..n {
+        if current_weight + w[i] &lt;= capacity {
+            current_weight += w[i];
+        } else {
+            trucks_used += 1;
+            current_weight = w[i];
+            if trucks_used &gt; k { return false; }
+        }
+    }
+    true
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- ALDS1-05 -->
+                <section>
+                    <h3>ALDS1-05</h3>
+
+                    <section id="alds1-05-a">
+                        <h4>A. 総当たり</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/5/ALDS1_5_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-05/alds1_05_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_05_A.rs</a></p>
+
+                        <details>
+                            <summary>再帰関数とは</summary>
+                            <p>関数が自分自身を呼び出すことで問題を解決する手法です。</p>
+                        </details>
+
+                        <pre><code class="language-rust">fn makeCombination(A: Vec&lt;u64&gt;, m: Vec&lt;u64&gt;, q: usize) {
+    for i in m {
+        let mut flag = false;
+        for j in 0..q {
+            flag = rec(&amp;A, i, j);
+            if flag { 
+                println!("yes");
+                break;
+            }
+        }
+        if !flag { println!("no"); }
+    }
+}
+
+fn rec(A: &amp;Vec&lt;u64&gt;, rest: u64, start: usize) -&gt; bool {
+    if rest==0 { return true; }
+    else if start&gt;=A.len() { return false; }
+    let result1 = rec(&amp;A, rest, start+1);
+    let result2 = if rest&gt;=A[start]{
+        rec(&amp;A, rest-A[start], start+1)
+    } else { false };
+    result1||result2
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-05-b">
+                        <h4>B. マージソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/5/ALDS1_5_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-05/alds1_05_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_05_B.rs</a></p>
+
+                        <details>
+                            <summary>マージソートとは</summary>
+                            <p>分割統治法に基づくソートアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Merge-sort-example-300px.gif"
+                                    alt="Merge Sort" /></p>
+                            <p>出典: <a
+                                    href="https://ja.wikipedia.org/wiki/%E3%83%9E%E3%83%BC%E3%82%B8%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia マージソート</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn merge(A: &amp;mut Vec&lt;u64&gt;, left: usize, mid: usize, right: usize, count: &amp;mut usize) {
+    let n1 = mid - left;
+    let n2 = right - mid;
+    let mut L: Vec&lt;u64&gt; = Vec::new();
+    let mut R: Vec&lt;u64&gt; = Vec::new();
+    for i in 0..n1 { L.push(A[left+i]); }
+    for i in 0..n2 { R.push(A[mid+i]); }
+    let inf = std::f64::INFINITY as u64;
+    L.push(inf);
+    R.push(inf);
+    let (mut i, mut j) = (0, 0);
+    for k in left..right {
+        if L[i]&lt;=R[j] {
+            A[k] = L[i];
+            i += 1;
+            *count += 1;
+        }else {
+            A[k] = R[j];
+            j += 1;
+            *count += 1;
+        }
+    }
+}
+
+fn mergeSort(A: &amp;mut Vec&lt;u64&gt;, left: usize, right: usize, count: &amp;mut usize) {
+    if left+1&lt;right {
+        let mid = (left + right) / 2;
+        mergeSort(A, left, mid, count);
+        mergeSort(A, mid, right, count);
+        merge(A, left, mid, right, count);
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-05-c">
+                        <h4>C. コッホ曲線</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/5/ALDS1_5_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-05/alds1_05_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_05_C.rs</a></p>
+
+                        <details>
+                            <summary>コッホ曲線とは</summary>
+                            <p>自己相似性を持つフラクタル曲線の一種です。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/f/fd/Von_Koch_curve.gif"
+                                    alt="Koch Curve" /></p>
+                            <p>出典: <a href="https://ja.wikipedia.org/wiki/%E3%82%B3%E3%83%83%E3%83%9B%E6%9B%B2%E7%B7%9A"
+                                    target="_blank" rel="noopener">Wikipedia コッホ曲線</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn kock(n: usize, p1: (f64, f64), p2: (f64, f64)) {
+    if n==0 { return; }
+    let rad: f64 = PI / 3.0;
+    let s: (f64, f64) = (
+        (2.0*p1.0 + 1.0*p2.0) / 3.0,
+        (2.0*p1.1 + 1.0*p2.1) / 3.0
+    );
+    let t: (f64, f64) = (
+        (1.0*p1.0 + 2.0*p2.0) / 3.0,
+        (1.0*p1.1 + 2.0*p2.1) / 3.0
+    );
+    let u: (f64, f64) = (
+        (t.0 - s.0)*rad.cos() - (t.1 - s.1)*rad.sin() + s.0,
+        (t.0 - s.0)*rad.sin() + (t.1 - s.1)*rad.cos() + s.1
+    );
+    kock(n-1, p1, s);
+    println!("{} {}", s.0, s.1);
+    kock(n-1, s, u);
+    println!("{} {}", u.0, u.1);
+    kock(n-1, u, t);
+    println!("{} {}", t.0, t.1);
+    kock(n-1 , t, p2);
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-05-d">
+                        <h4>D. 反転数</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/5/ALDS1_5_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-05/alds1_05_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_05_D.rs</a></p>
+
+                        <details>
+                            <summary>反転数とは</summary>
+                            <p>配列内の要素の順序が逆転しているペアの数を表します。</p>
+                            <p>参考資料: <a href="https://ja.wikipedia.org/wiki/%E8%BB%A2%E5%80%92_(%E6%95%B0%E5%AD%A6)"
+                                    target="_blank" rel="noopener">Wikipedia 転倒数</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn merge(A: &amp;mut Vec&lt;u64&gt;, left: usize, mid: usize, right: usize, count: &amp;mut usize) {
+    let n1 = mid - left;
+    let n2 = right - mid;
+    let mut L: Vec&lt;u64&gt; = Vec::new();
+    let mut R: Vec&lt;u64&gt; = Vec::new();
+    for i in 0..n1 { L.push(A[left+i]); }
+    for i in 0..n2 { R.push(A[mid+i]); }
+    let inf = std::f64::INFINITY as u64;
+    L.push(inf);
+    R.push(inf);
+    let (mut i, mut j) = (0, 0);
+    for k in left..right {
+        if L[i]&lt;=R[j] {
+            A[k] = L[i];
+            i += 1;
+        }else {
+            A[k] = R[j];
+            j += 1;
+            *count += n1 - i;
+        }
+    }
+}
+
+fn mergeSort(A: &amp;mut Vec&lt;u64&gt;, left: usize, right: usize, count: &amp;mut usize) {
+    if left+1&lt;right {
+        let mid = (left + right) / 2;
+        mergeSort(A, left, mid, count);
+        mergeSort(A, mid, right, count);
+        merge(A, left, mid, right, count);
+    }
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- ALDS1-06 -->
+                <section>
+                    <h3>ALDS1-06</h3>
+
+                    <section id="alds1-06-a">
+                        <h4>A. 計数ソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/6/ALDS1_6_A" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-06/alds1_06_A.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_06_A.rs</a></p>
+
+                        <details>
+                            <summary>計数ソートとは</summary>
+                            <p>整数の範囲が限られている場合に効率的に動作する安定ソートです。</p>
+                        </details>
+
+                        <pre><code class="language-rust">fn countingSort(n: usize, A: &amp;mut Vec&lt;u64&gt;, B: &amp;mut Vec&lt;u64&gt;) {
+    let k = 10000;
+    let mut C: Vec&lt;u64&gt; = vec![0; k+1];
+    for &amp;i in A.iter() { C[i as usize] += 1; }
+    for i in 1..k { C[i] += C[i-1]; }
+    for &amp;i in A.iter().rev() {
+        let a: usize = i as usize;
+        C[a] -= 1;
+        B[C[a] as usize] = i;
+    }
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-06-b">
+                        <h4>B. Partition</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/6/ALDS1_6_B" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-06/alds1_06_B.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_06_B.rs</a></p>
+
+                        <pre><code class="language-rust">fn partition(n: usize, A: &amp;mut Vec&lt;u64&gt;) -&gt; usize{
+    let x = A[n-1];
+    let mut i: usize = 0;
+    let mut tmp: u64 = 0;
+    for j in 0..n-1 {
+        if A[j]&lt;=x {
+            i += 1;
+            tmp = A[i-1];
+            A[i-1] = A[j];
+            A[j] = tmp;
+        }
+    }
+    tmp = A[i];
+    A[i] = A[n-1];
+    A[n-1] = tmp;
+    i
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-06-c">
+                        <h4>C. クイックソート</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/6/ALDS1_6_C" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-06/alds1_06_C.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_06_C.rs</a></p>
+
+                        <details>
+                            <summary>クイックソートとは</summary>
+                            <p>分割統治法に基づく効率的なソートアルゴリズムです。</p>
+                            <p><img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Sorting_quicksort_anim.gif"
+                                    alt="Quick Sort" /></p>
+                            <p>出典: <a
+                                    href="https://ja.wikipedia.org/wiki/%E3%82%AF%E3%82%A4%E3%83%83%E3%82%AF%E3%82%BD%E3%83%BC%E3%83%88"
+                                    target="_blank" rel="noopener">Wikipedia クイックソート</a></p>
+                        </details>
+
+                        <pre><code class="language-rust">fn quickSort(p: usize, r: usize, A: &amp;mut Vec&lt;(char, u64, u64)&gt;) {
+    if p&lt;r {
+        let q: usize = partition(p, r, A);
+        quickSort(p, q-1, A);
+        quickSort(q+1, r, A);
+    }
+}
+
+fn partition(p: usize, r:usize, A: &amp;mut Vec&lt;(char, u64, u64)&gt;) -&gt; usize{
+    let x = A[r].1;
+    let mut i: usize = p-1;
+    for j in p..r {
+        if A[j].1&lt;=x {
+            i += 1;
+            A.swap(i as usize, j as usize);
+        }
+    }
+    A.swap((i+1) as usize, r as usize);
+    i+1
+}
+
+fn is_stable(vec: &amp;Vec&lt;(char, u64, u64)&gt;) {
+    for i in 0..vec.len()-1 {
+        if vec[i].1==vec[i+1].1 &amp;&amp; vec[i].2&gt;vec[i+1].2 {
+            println!("Not stable");
+            print(&amp;vec);
+            return;
+        }   
+    }
+    println!("Stable");
+    print(&amp;vec);
+}</code></pre>
+                    </section>
+
+                    <section id="alds1-06-d">
+                        <h4>D. Minimum Cost Sort</h4>
+                        <p><a href="https://onlinejudge.u-aizu.ac.jp/courses/lesson/1/ALDS1/6/ALDS1_6_D" target="_blank"
+                                rel="noopener">Problem Link</a> | <a
+                                href="https://github.com/xilrv/alds1-rust/blob/main/alds1-06/alds1_06_D.rs"
+                                target="_blank" rel="noopener">GitHub Link: alds1_06_D.rs</a></p>
+
+                        <pre><code class="language-rust">fn weigh(W: &amp;Vec&lt;u64&gt;, n: usize) -&gt; u64 {
+    let mut indexes: HashMap&lt;u64, isize&gt; = HashMap::new();
+    let mut A = W.clone();
+    let mut weight = 0;
+
+    A.sort();
+    let lowestwv = A[0];
+
+    for (i, &amp;w) in W.iter().enumerate() {
+        indexes.insert(w, i as isize);
+    }
+
+    for i in 0..n {
+        if *indexes.get(&amp;W[i]).unwrap() &lt; 0 { continue; }
+
+        let fwv = W[i];
+        let mut av = A[i];
+
+        if fwv == av { continue; }
+
+        let mut minwv = fwv;
+        let mut next_idx = i;
+        let mut sum1 = 0;
+        let mut count = 1;
+
+        while {
+            sum1 += W[next_idx];
+            if minwv &gt; W[next_idx] { minwv = W[next_idx]; }
+
+            if fwv == av {
+                false
+            } else {
+                count += 1;
+                next_idx = *indexes.get(&amp;av).unwrap() as usize; 
+                indexes.insert(av, -1);
+                av = A[next_idx];
+                true
+            }
+        } {}
+
+        let sum2 = sum1 + minwv + (count + 1) * lowestwv;
+        sum1 += (count - 2) * minwv;
+        weight += sum1.min(sum2);
+    }
+    weight
+}</code></pre>
+                    </section>
+                </section>
+
+                <!-- まとめ -->
+                <section>
+                    <h2>まとめ</h2>
+                    <p>以上で、ALDS1の各セクションに対応するRustでの実装例を紹介しました。</p>
+                    <p>私がご紹介したコードは、あくまで一例ですので参考にしていただかなくて構いません。私のGitHubリポジトリには、ALDS1(01~13)までの実装が含まれていますので、皆様の学習に役立てていただければ幸いです。
+                    </p>
+                    <ul>
+                        <li>GitHubリポジトリ: <a href="https://github.com/xilrv/alds1-rust" target="_blank"
+                                rel="noopener">xilrv/alds1-rust</a></li>
+                    </ul>
+                </section>
+
+            </section>
+        </article>
+    </main>
+    <footer>
+        <p>&copy; <span id="current-year">2026</span> hashisato.</p>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yearSpan = document.getElementById('current-year');
+            if (yearSpan) {
+                yearSpan.textContent = new Date().getFullYear();
+            }
+        });
+    </script>
+</body>
+
+</html>
